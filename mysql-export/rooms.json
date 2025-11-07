@@ -1,0 +1,211 @@
+[
+  {
+    "RoomId": 1,
+    "RoomNumber": "101",
+    "Type": "Standard",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "99.99",
+    "FloorNumber": 1,
+    "MaxGuests": 2,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 2,
+    "RoomNumber": "102",
+    "Type": "Standard",
+    "Status": "Occupied",
+    "CurrentReservationId": 1,
+    "PricePerNight": "99.99",
+    "FloorNumber": 1,
+    "MaxGuests": 2,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 3,
+    "RoomNumber": "103",
+    "Type": "Deluxe",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "149.99",
+    "FloorNumber": 1,
+    "MaxGuests": 3,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 4,
+    "RoomNumber": "104",
+    "Type": "Deluxe",
+    "Status": "Maintenance",
+    "CurrentReservationId": null,
+    "PricePerNight": "149.99",
+    "FloorNumber": 1,
+    "MaxGuests": 3,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 5,
+    "RoomNumber": "105",
+    "Type": "Suite",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "249.99",
+    "FloorNumber": 1,
+    "MaxGuests": 4,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 6,
+    "RoomNumber": "106",
+    "Type": "Standard",
+    "Status": "Occupied",
+    "CurrentReservationId": 2,
+    "PricePerNight": "99.99",
+    "FloorNumber": 1,
+    "MaxGuests": 2,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 7,
+    "RoomNumber": "201",
+    "Type": "Deluxe",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "149.99",
+    "FloorNumber": 2,
+    "MaxGuests": 3,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 8,
+    "RoomNumber": "202",
+    "Type": "Deluxe",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "149.99",
+    "FloorNumber": 2,
+    "MaxGuests": 3,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 9,
+    "RoomNumber": "203",
+    "Type": "Suite",
+    "Status": "Available",
+    "CurrentReservationId": 3,
+    "PricePerNight": "249.99",
+    "FloorNumber": 2,
+    "MaxGuests": 4,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 10,
+    "RoomNumber": "204",
+    "Type": "Standard",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "99.99",
+    "FloorNumber": 2,
+    "MaxGuests": 2,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 11,
+    "RoomNumber": "205",
+    "Type": "Deluxe",
+    "Status": "Available",
+    "CurrentReservationId": 4,
+    "PricePerNight": "149.99",
+    "FloorNumber": 2,
+    "MaxGuests": 3,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 12,
+    "RoomNumber": "206",
+    "Type": "Suite",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "249.99",
+    "FloorNumber": 2,
+    "MaxGuests": 4,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 13,
+    "RoomNumber": "301",
+    "Type": "Suite",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "299.99",
+    "FloorNumber": 3,
+    "MaxGuests": 5,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 14,
+    "RoomNumber": "302",
+    "Type": "Suite",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "299.99",
+    "FloorNumber": 3,
+    "MaxGuests": 5,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 15,
+    "RoomNumber": "303",
+    "Type": "Suite",
+    "Status": "Occupied",
+    "CurrentReservationId": 5,
+    "PricePerNight": "299.99",
+    "FloorNumber": 3,
+    "MaxGuests": 5,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 16,
+    "RoomNumber": "304",
+    "Type": "Deluxe",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "179.99",
+    "FloorNumber": 3,
+    "MaxGuests": 3,
+    "CreatedAt": "2025-10-10T22:41:04.000Z"
+  },
+  {
+    "RoomId": 18,
+    "RoomNumber": "107",
+    "Type": "Standard",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "100.00",
+    "FloorNumber": 1,
+    "MaxGuests": 2,
+    "CreatedAt": "2025-10-11T10:43:41.000Z"
+  },
+  {
+    "RoomId": 20,
+    "RoomNumber": "109",
+    "Type": "Standard",
+    "Status": "Occupied",
+    "CurrentReservationId": null,
+    "PricePerNight": "100.00",
+    "FloorNumber": 1,
+    "MaxGuests": 2,
+    "CreatedAt": "2025-10-11T10:43:41.000Z"
+  },
+  {
+    "RoomId": 23,
+    "RoomNumber": "305",
+    "Type": "Standard",
+    "Status": "Available",
+    "CurrentReservationId": null,
+    "PricePerNight": "600.00",
+    "FloorNumber": 1,
+    "MaxGuests": 2,
+    "CreatedAt": "2025-10-11T13:53:03.000Z"
+  }
+]

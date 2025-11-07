@@ -1,0 +1,74 @@
+[
+  {
+    "ReservationId": 1,
+    "RoomId": 2,
+    "GuestId": 1,
+    "CheckInDate": "2025-10-08T22:51:34.000Z",
+    "CheckOutDate": "2025-10-13T22:51:34.000Z",
+    "NumberOfGuests": 2,
+    "StaffNotes": "VIP Guest. Greet by name upon arrival.\nRequested extra pillows.",
+    "Status": "Active",
+    "CreatedAt": "2025-10-10T22:51:34.000Z",
+    "CreatedByManagerId": 1
+  },
+  {
+    "ReservationId": 2,
+    "RoomId": 6,
+    "GuestId": 2,
+    "CheckInDate": "2025-10-09T22:51:34.000Z",
+    "CheckOutDate": "2025-10-15T22:51:34.000Z",
+    "NumberOfGuests": 1,
+    "StaffNotes": "Allergic to peanuts. Inform kitchen staff.",
+    "Status": "Active",
+    "CreatedAt": "2025-10-10T22:51:34.000Z",
+    "CreatedByManagerId": 1
+  },
+  {
+    "ReservationId": 3,
+    "RoomId": 9,
+    "GuestId": 3,
+    "CheckInDate": "2025-10-10T22:51:34.000Z",
+    "CheckOutDate": "2025-10-17T22:51:34.000Z",
+    "NumberOfGuests": 4,
+    "StaffNotes": "Late check-out at 1:00 PM requested.\nCelebrating anniversary.",
+    "Status": "CheckedOut",
+    "CreatedAt": "2025-10-10T22:51:34.000Z",
+    "CreatedByManagerId": 1
+  },
+  {
+    "ReservationId": 4,
+    "RoomId": 11,
+    "GuestId": 4,
+    "CheckInDate": "2025-10-07T22:51:34.000Z",
+    "CheckOutDate": "2025-10-11T22:51:34.000Z",
+    "NumberOfGuests": 2,
+    "StaffNotes": "Business trip. Requested quiet room.",
+    "Status": "CheckedOut",
+    "CreatedAt": "2025-10-10T22:51:34.000Z",
+    "CreatedByManagerId": 1
+  },
+  {
+    "ReservationId": 5,
+    "RoomId": 15,
+    "GuestId": 5,
+    "CheckInDate": "2025-10-06T22:51:34.000Z",
+    "CheckOutDate": "2025-10-16T22:51:34.000Z",
+    "NumberOfGuests": 3,
+    "StaffNotes": "Family vacation. Requested connecting rooms if available.",
+    "Status": "Active",
+    "CreatedAt": "2025-10-10T22:51:34.000Z",
+    "CreatedByManagerId": 1
+  },
+  {
+    "ReservationId": 6,
+    "RoomId": 20,
+    "GuestId": 6,
+    "CheckInDate": "2025-10-17T21:00:00.000Z",
+    "CheckOutDate": "2025-10-19T21:00:00.000Z",
+    "NumberOfGuests": 1,
+    "StaffNotes": "testtesttest",
+    "Status": "Active",
+    "CreatedAt": "2025-10-11T10:46:00.000Z",
+    "CreatedByManagerId": 1
+  }
+]

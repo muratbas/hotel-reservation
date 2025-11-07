@@ -1,0 +1,26 @@
+[
+  {
+    "ManagerId": 1,
+    "Email": "admin@hotel.com",
+    "PasswordHash": "$2b$10$W1WHyps7Ozl2NyPRovTPqu/i96dgIA2ViiUGOv.lNPXiWDWESz.Im",
+    "FullName": "Admin User",
+    "CreatedAt": "2025-10-10T22:51:34.000Z",
+    "LastLoginAt": "2025-10-11T14:28:06.000Z"
+  },
+  {
+    "ManagerId": 2,
+    "Email": "test@hotel.com",
+    "PasswordHash": "$2a$10$N9qo8uLOickgx2ZMRZoMye7NqS7RrGDJQMYXW1K5Q2xCXZPzH3nCm",
+    "FullName": "Test Manager",
+    "CreatedAt": "2025-10-11T11:34:27.000Z",
+    "LastLoginAt": null
+  },
+  {
+    "ManagerId": 3,
+    "Email": "muratbas@hotel.com",
+    "PasswordHash": "$2b$10$TllWv4JgdtTv43E6Ze0wzuR9kJ3EmG/sozWvX428L.yRGgGVsQX9W",
+    "FullName": "Murat Baş",
+    "CreatedAt": "2025-10-11T12:18:47.000Z",
+    "LastLoginAt": "2025-10-11T13:57:31.000Z"
+  }
+]
