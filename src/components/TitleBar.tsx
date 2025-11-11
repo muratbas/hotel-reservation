@@ -4,7 +4,7 @@ interface TitleBarProps {
   title?: string;
 }
 
-const TitleBar: React.FC<TitleBarProps> = ({ title = 'Hotel Reservation System' }) => {
+const TitleBar: React.FC<TitleBarProps> = ({ title = 'Otel Rezervasyon Sistemi' }) => {
   const [isMaximized, setIsMaximized] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const TitleBar: React.FC<TitleBarProps> = ({ title = 'Hotel Reservation System' 
         <button
           onClick={handleMinimize}
           className="h-8 w-12 flex items-center justify-center hover:bg-hover-dark transition-colors"
-          title="Minimize"
+          title="Küçült"
         >
           <span className="material-symbols-outlined text-text-secondary text-base">minimize</span>
         </button>
@@ -52,7 +52,7 @@ const TitleBar: React.FC<TitleBarProps> = ({ title = 'Hotel Reservation System' 
         <button
           onClick={handleMaximize}
           className="h-8 w-12 flex items-center justify-center hover:bg-hover-dark transition-colors"
-          title={isMaximized ? "Restore" : "Maximize"}
+          title={isMaximized ? "Geri Al" : "Büyüt"}
         >
           <span className="material-symbols-outlined text-text-secondary text-base">
             {isMaximized ? 'filter_none' : 'crop_square'}
@@ -63,7 +63,7 @@ const TitleBar: React.FC<TitleBarProps> = ({ title = 'Hotel Reservation System' 
         <button
           onClick={handleClose}
           className="h-8 w-12 flex items-center justify-center hover:bg-red-600 transition-colors"
-          title="Close"
+          title="Kapat"
         >
           <span className="material-symbols-outlined text-text-secondary hover:text-white text-base">close</span>
         </button>

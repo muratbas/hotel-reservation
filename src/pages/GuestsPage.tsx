@@ -73,7 +73,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
   if (loading) {
     return (
       <div className="flex flex-1 items-center justify-center">
-        <div className="text-text-secondary text-lg">Loading guests...</div>
+        <div className="text-text-secondary text-lg">Misafirler yükleniyor...</div>
       </div>
     );
   }
@@ -82,13 +82,13 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
     return (
       <div className="flex flex-1 items-center justify-center">
         <div className="text-center">
-          <p className="text-red-400 text-lg mb-2">Error loading guests</p>
+          <p className="text-red-400 text-lg mb-2">Misafirler yüklenirken hata oluştu</p>
           <p className="text-text-secondary text-sm mb-4">{error}</p>
           <button 
             onClick={loadGuests}
             className="px-4 py-2 bg-primary text-text-primary rounded-lg hover:bg-primary/80"
           >
-            Try Again
+            Tekrar Dene
           </button>
         </div>
       </div>
@@ -102,9 +102,9 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
       {/* Header */}
       <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
         <div className="flex flex-col gap-2">
-          <h1 className="text-text-primary text-4xl font-black tracking-tight">Guests</h1>
+          <h1 className="text-text-primary text-4xl font-black tracking-tight">Misafirler</h1>
           <p className="text-text-secondary text-base">
-            Manage your hotel guests and view their reservation history.
+            Otel misafirlerinizi yönetin ve rezervasyon geçmişlerini görüntüleyin.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
             className="flex cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-green-600 hover:bg-green-700 text-text-primary text-sm font-bold transition-colors"
           >
             <span className="material-symbols-outlined text-base">download</span>
-            <span className="truncate">Export Guests</span>
+            <span className="truncate">Misafirleri Dışa Aktar</span>
           </button>
         </div>
       </div>
@@ -127,7 +127,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
               <span className="material-symbols-outlined text-primary text-2xl">group</span>
             </div>
             <div>
-              <p className="text-text-secondary text-sm">Total Guests</p>
+              <p className="text-text-secondary text-sm">Toplam Misafir</p>
               <p className="text-text-primary text-2xl font-bold">{guests.length}</p>
             </div>
           </div>
@@ -139,7 +139,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
               <span className="material-symbols-outlined text-green-500 text-2xl">hotel</span>
             </div>
             <div>
-              <p className="text-text-secondary text-sm">Total Stays</p>
+              <p className="text-text-secondary text-sm">Toplam Konaklama</p>
               <p className="text-text-primary text-2xl font-bold">
                 {guests.reduce((sum, g) => sum + Number(g.TotalStays || 0), 0)}
               </p>
@@ -153,7 +153,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
               <span className="material-symbols-outlined text-yellow-500 text-2xl">payments</span>
             </div>
             <div>
-              <p className="text-text-secondary text-sm">Total Revenue</p>
+              <p className="text-text-secondary text-sm">Toplam Gelir</p>
               <p className="text-text-primary text-2xl font-bold">
                 ₺{guests.reduce((sum, g) => sum + Number(g.TotalRevenue || 0), 0).toFixed(2)}
               </p>
@@ -172,7 +172,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search by name, phone, or email..."
+            placeholder="İsim, telefon veya e-posta ile arayın..."
             className="w-full bg-sidebar-dark text-text-primary border border-border-color rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary placeholder-text-secondary/50"
             autoComplete="off"
           />
@@ -185,13 +185,13 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
           <table className="w-full">
             <thead className="bg-card-dark border-b border-border-color">
               <tr>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Guest Name</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Contact</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Email</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Total Stays</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Last Stay</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Total Spent</th>
-                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Actions</th>
+                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Misafir Adı</th>
+                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">İletişim</th>
+                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">E-posta</th>
+                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Toplam Konaklama</th>
+                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Son Konaklama</th>
+                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">Toplam Harcama</th>
+                <th className="text-left px-6 py-4 text-text-secondary text-sm font-medium">İşlemler</th>
               </tr>
             </thead>
             <tbody>
@@ -199,7 +199,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
                 <tr>
                   <td colSpan={7} className="text-center py-12">
                     <p className="text-text-secondary">
-                      {searchTerm ? 'No guests found matching your search' : 'No guests yet'}
+                      {searchTerm ? 'Aramanızla eşleşen misafir bulunamadı' : 'Henüz misafir yok'}
                     </p>
                   </td>
                 </tr>
@@ -349,7 +349,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                 </div>
                 <div>
                   <h2 className="text-text-primary text-2xl font-bold">{guest.FullName}</h2>
-                  <p className="text-text-secondary text-sm">Guest ID: #{guest.GuestId}</p>
+                  <p className="text-text-secondary text-sm">Misafir No: #{guest.GuestId}</p>
                 </div>
               </div>
               <button 
@@ -366,7 +366,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                 className="flex items-center gap-2 px-4 py-2 bg-primary text-text-primary rounded-lg hover:bg-primary/80 transition-colors text-sm font-medium"
               >
                 <span className="material-symbols-outlined text-base">edit</span>
-                Edit Information
+                Bilgileri Düzenle
               </button>
             ) : (
               <div className="flex gap-3">
@@ -374,13 +374,13 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                   onClick={() => setIsEditing(false)}
                   className="px-4 py-2 bg-card-dark text-text-primary rounded-lg hover:bg-hover-dark transition-colors text-sm"
                 >
-                  Cancel
+                  İptal
                 </button>
                 <button
                   onClick={handleSaveEdit}
                   className="px-4 py-2 bg-green-600 text-text-primary rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
                 >
-                  Save Changes
+                  Değişiklikleri Kaydet
                 </button>
               </div>
             )}
@@ -390,12 +390,12 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
           <div className="p-6 space-y-6">
             {/* Guest Information */}
             <div className="bg-card-dark p-6 rounded-lg">
-              <h3 className="text-text-primary text-lg font-bold mb-4">Contact Information</h3>
+                        <h3 className="text-text-primary text-lg font-bold mb-4">İletişim Bilgileri</h3>
               
               {isEditing ? (
                 <div className="space-y-4">
                   <div>
-                    <label className="text-text-secondary text-sm mb-1 block">Full Name</label>
+                    <label className="text-text-secondary text-sm mb-1 block">Ad Soyad</label>
                     <input
                       type="text"
                       value={editName}
@@ -404,7 +404,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                     />
                   </div>
                   <div>
-                    <label className="text-text-secondary text-sm mb-1 block">Phone Number</label>
+                    <label className="text-text-secondary text-sm mb-1 block">Telefon Numarası</label>
                     <input
                       type="tel"
                       value={editPhone}
@@ -413,7 +413,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                     />
                   </div>
                   <div>
-                    <label className="text-text-secondary text-sm mb-1 block">Email (Optional)</label>
+                    <label className="text-text-secondary text-sm mb-1 block">E-posta (Opsiyonel)</label>
                     <input
                       type="email"
                       value={editEmail}
@@ -435,7 +435,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                   <div className="flex items-center gap-3">
                     <span className="material-symbols-outlined text-text-secondary">calendar_today</span>
                     <span className="text-text-secondary text-sm">
-                      Member since {formatDate(guest.CreatedAt)}
+                      Üyelik tarihi {formatDate(guest.CreatedAt)}
                     </span>
                   </div>
                 </div>
@@ -445,32 +445,32 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
             {/* Statistics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-card-dark p-4 rounded-lg text-center">
-                <p className="text-text-secondary text-sm mb-1">Total Stays</p>
+                <p className="text-text-secondary text-sm mb-1">Toplam Konaklama</p>
                 <p className="text-text-primary text-3xl font-bold">{Number(guest.TotalStays || 0)}</p>
               </div>
               <div className="bg-card-dark p-4 rounded-lg text-center">
-                <p className="text-text-secondary text-sm mb-1">Total Revenue</p>
+                <p className="text-text-secondary text-sm mb-1">Toplam Gelir</p>
                 <p className="text-text-primary text-3xl font-bold">₺{Number(guest.TotalRevenue || 0).toFixed(2)}</p>
               </div>
               <div className="bg-card-dark p-4 rounded-lg text-center">
-                <p className="text-text-secondary text-sm mb-1">Last Stay</p>
+                <p className="text-text-secondary text-sm mb-1">Son Konaklama</p>
                 <p className="text-text-primary text-lg font-semibold">
-                  {guest.LastStayDate ? formatDate(guest.LastStayDate) : 'Never'}
+                  {guest.LastStayDate ? formatDate(guest.LastStayDate) : 'Hiç'}
                 </p>
               </div>
             </div>
 
             {/* Reservation History */}
             <div>
-              <h3 className="text-text-primary text-lg font-bold mb-4">Reservation History</h3>
+              <h3 className="text-text-primary text-lg font-bold mb-4">Rezervasyon Geçmişi</h3>
               
               {loading ? (
                 <div className="text-center py-8">
-                  <p className="text-text-secondary">Loading reservations...</p>
+                  <p className="text-text-secondary">Rezervasyonlar yükleniyor...</p>
                 </div>
               ) : reservations.length === 0 ? (
                 <div className="text-center py-8 bg-card-dark rounded-lg">
-                  <p className="text-text-secondary">No reservation history</p>
+                  <p className="text-text-secondary">Rezervasyon geçmişi yok</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -489,7 +489,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                           </p>
                           {reservation.StaffNotes && (
                             <p className="text-text-secondary text-sm mt-2">
-                              Note: {reservation.StaffNotes}
+                              Not: {reservation.StaffNotes}
                             </p>
                           )}
                         </div>

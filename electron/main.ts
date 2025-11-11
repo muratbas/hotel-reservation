@@ -546,7 +546,7 @@ ipcMain.handle('auth:get-current-manager', async (_event, managerId: number) => 
   if (!dbConnection) throw new Error('Database not connected');
   
   try {
-    const query = `SELECT ManagerId, Email, FullName, CreatedAt, LastLoginAt FROM Managers WHERE ManagerId = ?`;
+    const query = `SELECT ManagerId, Email, FullName, Role, CreatedAt, LastLoginAt FROM Managers WHERE ManagerId = ?`;
     const [rows]: any = await dbConnection.execute(query, [managerId]);
     
     if (rows.length === 0) {
@@ -565,7 +565,7 @@ ipcMain.handle('auth:get-managers', async () => {
   if (!dbConnection) throw new Error('Database not connected');
   
   try {
-    const query = `SELECT ManagerId, Email, FullName, CreatedAt, LastLoginAt FROM Managers ORDER BY CreatedAt DESC`;
+    const query = `SELECT ManagerId, Email, FullName, Role, CreatedAt, LastLoginAt FROM Managers ORDER BY CreatedAt DESC`;
     const [rows]: any = await dbConnection.execute(query);
     return { success: true, managers: rows };
   } catch (error: any) {
@@ -575,7 +575,7 @@ ipcMain.handle('auth:get-managers', async () => {
 });
 
 // Create new manager
-ipcMain.handle('auth:create-manager', async (_event, email: string, password: string, fullName: string) => {
+ipcMain.handle('auth:create-manager', async (_event, email: string, password: string, fullName: string, role: string = 'Personel') => {
   if (!dbConnection) throw new Error('Database not connected');
   
   try {
@@ -592,9 +592,9 @@ ipcMain.handle('auth:create-manager', async (_event, email: string, password: st
     // Hash password
     const passwordHash = await bcrypt.hash(password, 10);
     
-    // Insert new manager
-    const query = `INSERT INTO Managers (Email, PasswordHash, FullName, CreatedAt) VALUES (?, ?, ?, NOW())`;
-    const [result]: any = await dbConnection.execute(query, [email, passwordHash, fullName]);
+    // Insert new manager with role
+    const query = `INSERT INTO Managers (Email, PasswordHash, FullName, Role, CreatedAt) VALUES (?, ?, ?, ?, NOW())`;
+    const [result]: any = await dbConnection.execute(query, [email, passwordHash, fullName, role]);
     
     return { success: true, managerId: result.insertId };
   } catch (error: any) {

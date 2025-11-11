@@ -53,7 +53,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
   };
 
   const handleCheckOut = async () => {
-    if (!room || !window.confirm('Are you sure you want to check out this guest?')) return;
+    if (!room || !window.confirm('Bu misafirin çıkışını yapmak istediğinizden emin misiniz?')) return;
     
     setLoading(true);
     try {
@@ -62,10 +62,10 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
         if (onReservationUpdated) onReservationUpdated();
         onClose();
       } else {
-        alert('Failed to check out: ' + result.message);
+        alert('Çıkış yapılamadı: ' + result.message);
       }
     } catch (error: any) {
-      alert('Error: ' + error.message);
+      alert('Hata: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
       const checkOut = new Date(editCheckOutDate);
       
       if (checkOut <= checkIn) {
-        throw new Error('Check-out must be after check-in');
+        throw new Error('Çıkış tarihi giriş tarihinden sonra olmalıdır');
       }
 
       const result = await window.electronAPI.updateReservation(
@@ -164,7 +164,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
   };
 
   const formatDate = (date: Date | string) => {
-    return new Date(date).toLocaleDateString('en-US', { 
+    return new Date(date).toLocaleDateString('tr-TR', { 
       month: 'long', 
       day: 'numeric', 
       year: 'numeric',
@@ -192,10 +192,10 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-4">
                 <h2 className="text-white text-3xl font-black leading-tight">
-                  Room {room.RoomNumber}
+                  Oda {room.RoomNumber}
                 </h2>
                 <span className={`px-3 py-1 text-sm font-semibold rounded-full ${statusColor}`}>
-                  {room.Status}
+                  {room.Status === 'Available' ? 'Müsait' : room.Status === 'Occupied' ? 'Dolu' : 'Bakımda'}
                 </span>
               </div>
               <button 
@@ -214,20 +214,20 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                   disabled={loading}
                   className="flex items-center justify-center rounded-lg h-10 px-4 bg-[#E74C3C] hover:bg-[#C0392B] text-white text-sm font-bold transition-colors disabled:opacity-50"
                 >
-                  <span className="truncate">Check Out Guest</span>
+                  <span className="truncate">Misafir Çıkışı Yap</span>
                 </button>
                 <button 
                   onClick={() => setIsEditing(true)}
                   className="flex items-center justify-center rounded-lg h-10 px-4 bg-[#2C3E50] hover:bg-[#34495E] text-white text-sm font-bold transition-colors"
                 >
-                  <span className="truncate">Edit Information</span>
+                  <span className="truncate">Bilgileri Düzenle</span>
                 </button>
                 <button 
                   onClick={() => printInvoice(reservation, { FullName: reservation.GuestName, PhoneNumber: reservation.PhoneNumber, Email: reservation.Email, Gender: reservation.Gender }, room)}
                   className="flex items-center gap-2 justify-center rounded-lg h-10 px-4 bg-[#3498DB] hover:bg-[#2980B9] text-white text-sm font-bold transition-colors"
                 >
                   <span className="material-symbols-outlined text-base">print</span>
-                  <span className="truncate">Print Invoice</span>
+                  <span className="truncate">Fatura Yazdır</span>
                 </button>
               </div>
             )}
@@ -242,7 +242,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                     className="flex items-center gap-2 justify-center rounded-lg h-10 px-4 bg-[#E67E22] hover:bg-[#D35400] text-white text-sm font-bold transition-colors disabled:opacity-50"
                   >
                     <span className="material-symbols-outlined text-base">build</span>
-                    <span className="truncate">Set to Maintenance</span>
+                    <span className="truncate">Bakıma Al</span>
                   </button>
                 )}
                 {room.Status === 'Maintenance' && (
@@ -252,7 +252,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                     className="flex items-center gap-2 justify-center rounded-lg h-10 px-4 bg-[#27AE60] hover:bg-[#229954] text-white text-sm font-bold transition-colors disabled:opacity-50"
                   >
                     <span className="material-symbols-outlined text-base">check_circle</span>
-                    <span className="truncate">Set to Available</span>
+                    <span className="truncate">Müsait Yap</span>
                   </button>
                 )}
               </div>
@@ -265,14 +265,14 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                   disabled={loading}
                   className="flex items-center justify-center rounded-lg h-10 px-4 bg-[#7F8C8D] hover:bg-[#95A5A6] text-white text-sm font-bold transition-colors disabled:opacity-50"
                 >
-                  <span className="truncate">Cancel</span>
+                  <span className="truncate">İptal</span>
                 </button>
                 <button 
                   onClick={handleSaveEdit}
                   disabled={loading}
                   className="flex items-center justify-center rounded-lg h-10 px-4 bg-[#27AE60] hover:bg-[#229954] text-white text-sm font-bold transition-colors disabled:opacity-50"
                 >
-                  <span className="truncate">{loading ? 'Saving...' : 'Save Changes'}</span>
+                  <span className="truncate">{loading ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}</span>
                 </button>
               </div>
             )}
@@ -284,29 +284,31 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
               {/* Left Column: Room Profile */}
               <div className="lg:col-span-1">
                 <div className="bg-[#2C3E50] p-6 rounded-xl">
-                  <h3 className="text-white text-xl font-bold mb-6">Room Details</h3>
+                  <h3 className="text-white text-xl font-bold mb-6">Oda Detayları</h3>
                   
                   <div className="flex flex-col items-center mb-6">
                     <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-3">
                       <span className="material-symbols-outlined text-4xl text-primary">bed</span>
                     </div>
-                    <h4 className="text-white text-lg font-bold">{room.Type}</h4>
-                    <p className="text-[#EAEAEA]/70 text-sm">Floor {room.FloorNumber}</p>
+                    <h4 className="text-white text-lg font-bold">
+                      {room.Type === 'Standard' ? 'Standart' : room.Type === 'Deluxe' ? 'Deluxe' : 'Suit'}
+                    </h4>
+                    <p className="text-[#EAEAEA]/70 text-sm">Kat {room.FloorNumber}</p>
                   </div>
 
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
                       <span className="material-symbols-outlined text-[#EAEAEA]/70">payments</span>
                       <div>
-                        <p className="text-xs text-[#EAEAEA]/70">Price per Night</p>
+                        <p className="text-xs text-[#EAEAEA]/70">Gecelik Fiyat</p>
                         <p className="text-sm text-white font-semibold">₺{Number(room.PricePerNight).toFixed(2)}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="material-symbols-outlined text-[#EAEAEA]/70">group</span>
                       <div>
-                        <p className="text-xs text-[#EAEAEA]/70">Max Guests</p>
-                        <p className="text-sm text-white font-semibold">{Number(room.MaxGuests)} guests</p>
+                        <p className="text-xs text-[#EAEAEA]/70">Maksimum Misafir</p>
+                        <p className="text-sm text-white font-semibold">{Number(room.MaxGuests)} misafir</p>
                       </div>
                     </div>
                   </div>
@@ -332,7 +334,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                     <>
                       {/* Guest Profile */}
                       <div className="bg-[#2C3E50] p-6 rounded-xl">
-                        <h3 className="text-white text-xl font-bold mb-6">Guest Information</h3>
+                        <h3 className="text-white text-xl font-bold mb-6">Misafir Bilgileri</h3>
                         
                         <div className="flex items-center gap-4 mb-6">
                           <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
@@ -350,7 +352,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                           </div>
                           <div>
                             <h4 className="text-white text-lg font-bold">{reservation.GuestName}</h4>
-                            <p className="text-[#EAEAEA]/70 text-sm">Guest</p>
+                            <p className="text-[#EAEAEA]/70 text-sm">Misafir</p>
                           </div>
                         </div>
 
@@ -368,7 +370,9 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                           {reservation.Gender && (
                             <div className="flex items-center gap-4">
                               <span className="material-symbols-outlined text-[#EAEAEA]/70">person</span>
-                              <p className="text-sm text-white">{reservation.Gender}</p>
+                              <p className="text-sm text-white">
+                                {reservation.Gender === 'Male' ? 'Erkek' : reservation.Gender === 'Female' ? 'Kadın' : 'Diğer'}
+                              </p>
                             </div>
                           )}
                         </div>
@@ -376,13 +380,13 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
 
                       {/* Reservation Details */}
                       <div className="bg-[#2C3E50] p-6 rounded-xl">
-                        <h3 className="text-white text-xl font-bold mb-6">Reservation Details</h3>
+                        <h3 className="text-white text-xl font-bold mb-6">Rezervasyon Detayları</h3>
                         
                         {isEditing ? (
                           <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div>
-                                <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Check-In Date</label>
+                                <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Giriş Tarihi</label>
                                 <input
                                   type="date"
                                   value={editCheckInDate}
@@ -391,7 +395,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                                 />
                               </div>
                               <div>
-                                <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Check-Out Date</label>
+                                <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Çıkış Tarihi</label>
                                 <input
                                   type="date"
                                   value={editCheckOutDate}
@@ -402,7 +406,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                             </div>
                             
                             <div>
-                              <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Number of Guests</label>
+                              <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Misafir Sayısı</label>
                               <input
                                 type="number"
                                 value={editNumberOfGuests}
@@ -470,11 +474,11 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                   )
                 ) : (
                   <div className="bg-[#2C3E50] p-6 rounded-xl">
-                    <h3 className="text-white text-xl font-bold mb-4">Room Status</h3>
+                    <h3 className="text-white text-xl font-bold mb-4">Oda Durumu</h3>
                     <div className="text-center py-8">
                       <p className="text-[#EAEAEA]/70">
-                        {room.Status === 'Available' && 'This room is available for booking'}
-                        {room.Status === 'Maintenance' && 'This room is currently under maintenance'}
+                        {room.Status === 'Available' && 'Bu oda rezervasyon için müsait'}
+                        {room.Status === 'Maintenance' && 'Bu oda şu anda bakımda'}
                       </p>
                     </div>
                   </div>

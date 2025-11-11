@@ -3,7 +3,7 @@ export async function downloadCSV(type: 'guests' | 'reservations' | 'rooms') {
     const result = await window.electronAPI.exportCSV(type);
     
     if (!result.success || !result.data) {
-      alert('Failed to export: ' + (result.message || 'Unknown error'));
+      alert('Dışa aktarma başarısız: ' + (result.message || 'Bilinmeyen hata'));
       return;
     }
 
@@ -25,7 +25,7 @@ export async function downloadCSV(type: 'guests' | 'reservations' | 'rooms') {
     return true;
   } catch (error: any) {
     console.error('CSV export error:', error);
-    alert('Export failed: ' + error.message);
+    alert('Dışa aktarma başarısız: ' + error.message);
     return false;
   }
 }
@@ -76,7 +76,7 @@ export function printInvoice(reservation: any, guest: any, room: any) {
   // Create print window
   const printWindow = window.open('', '_blank');
   if (!printWindow) {
-    alert('Please allow popups to print invoices');
+    alert('Faturaları yazdırmak için popup\'lara izin verin');
     return;
   }
 
@@ -84,7 +84,7 @@ export function printInvoice(reservation: any, guest: any, room: any) {
     <!DOCTYPE html>
     <html>
     <head>
-      <title>Invoice - Reservation #${reservation.ReservationId}</title>
+      <title>Fatura - Rezervasyon #${reservation.ReservationId}</title>
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -182,68 +182,68 @@ export function printInvoice(reservation: any, guest: any, room: any) {
           <p>Phone: (123) 456-7890</p>
         </div>
         <div class="invoice-info">
-          <h2>INVOICE</h2>
-          <p><strong>Invoice #:</strong> ${reservation.ReservationId}</p>
-          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+          <h2>FATURA</h2>
+          <p><strong>Fatura No:</strong> ${reservation.ReservationId}</p>
+          <p><strong>Tarih:</strong> ${new Date().toLocaleDateString('tr-TR')}</p>
         </div>
       </div>
 
       <div class="section">
-        <h3>Guest Information</h3>
+        <h3>Misafir Bilgileri</h3>
         <div class="detail-row">
-          <span class="detail-label">Guest Name:</span>
-          <span class="detail-value">${guest.FullName || 'N/A'}</span>
+          <span class="detail-label">Misafir Adı:</span>
+          <span class="detail-value">${guest.FullName || 'Belirtilmemiş'}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Phone:</span>
-          <span class="detail-value">${guest.PhoneNumber || 'N/A'}</span>
+          <span class="detail-label">Telefon:</span>
+          <span class="detail-value">${guest.PhoneNumber || 'Belirtilmemiş'}</span>
         </div>
         ${guest.Email ? `
         <div class="detail-row">
-          <span class="detail-label">Email:</span>
+          <span class="detail-label">E-posta:</span>
           <span class="detail-value">${guest.Email}</span>
         </div>
         ` : ''}
       </div>
 
       <div class="section">
-        <h3>Reservation Details</h3>
+        <h3>Rezervasyon Detayları</h3>
         <div class="detail-row">
-          <span class="detail-label">Room Number:</span>
+          <span class="detail-label">Oda Numarası:</span>
           <span class="detail-value">${room.RoomNumber}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Room Type:</span>
-          <span class="detail-value">${room.Type}</span>
+          <span class="detail-label">Oda Tipi:</span>
+          <span class="detail-value">${room.Type === 'Standard' ? 'Standart' : room.Type === 'Deluxe' ? 'Deluxe' : 'Suit'}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Check-In:</span>
-          <span class="detail-value">${checkIn.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+          <span class="detail-label">Giriş:</span>
+          <span class="detail-value">${checkIn.toLocaleDateString('tr-TR', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Check-Out:</span>
-          <span class="detail-value">${checkOut.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+          <span class="detail-label">Çıkış:</span>
+          <span class="detail-value">${checkOut.toLocaleDateString('tr-TR', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Number of Guests:</span>
+          <span class="detail-label">Misafir Sayısı:</span>
           <span class="detail-value">${reservation.NumberOfGuests || 1}</span>
         </div>
       </div>
 
       <div class="section">
-        <h3>Charges</h3>
+        <h3>Ücretler</h3>
         <table>
           <thead>
             <tr>
-              <th>Description</th>
-              <th style="text-align: center;">Nights</th>
-              <th style="text-align: right;">Rate/Night</th>
-              <th style="text-align: right;">Amount</th>
+              <th>Açıklama</th>
+              <th style="text-align: center;">Gece</th>
+              <th style="text-align: right;">Gecelik Ücret</th>
+              <th style="text-align: right;">Tutar</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Room ${room.RoomNumber} - ${room.Type}</td>
+              <td>Oda ${room.RoomNumber} - ${room.Type === 'Standard' ? 'Standart' : room.Type === 'Deluxe' ? 'Deluxe' : 'Suit'}</td>
               <td style="text-align: center;">${nights}</td>
               <td style="text-align: right;">₺${pricePerNight.toFixed(2)}</td>
               <td style="text-align: right;">₺${total.toFixed(2)}</td>
@@ -254,37 +254,37 @@ export function printInvoice(reservation: any, guest: any, room: any) {
 
       <div class="total-section">
         <div class="total-row">
-          <span>Subtotal:</span>
+          <span>Ara Toplam:</span>
           <span>₺${total.toFixed(2)}</span>
         </div>
         <div class="total-row">
-          <span>Tax (0%):</span>
+          <span>Vergi (0%):</span>
           <span>₺0.00</span>
         </div>
         <div class="total-row grand-total">
-          <span>TOTAL:</span>
+          <span>TOPLAM:</span>
           <span>₺${total.toFixed(2)}</span>
         </div>
       </div>
 
       ${reservation.StaffNotes ? `
       <div class="section">
-        <h3>Notes</h3>
+        <h3>Notlar</h3>
         <p>${reservation.StaffNotes}</p>
       </div>
       ` : ''}
 
       <div class="footer">
-        <p>Thank you for choosing our hotel!</p>
-        <p>This is a computer-generated invoice.</p>
+        <p>Otelimizi seçtiğiniz için teşekkür ederiz!</p>
+        <p>Bu bilgisayar tarafından oluşturulmuş bir faturadır.</p>
       </div>
 
       <div class="no-print" style="margin-top: 40px; text-align: center;">
         <button onclick="window.print()" style="padding: 12px 30px; background: #137fec; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer;">
-          Print Invoice
+          Faturayı Yazdır
         </button>
         <button onclick="window.close()" style="padding: 12px 30px; background: #666; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; margin-left: 10px;">
-          Close
+          Kapat
         </button>
       </div>
     </body>

@@ -67,12 +67,12 @@ export default function RoomManagementModal({
     try {
       // Validation
       if (!startRoomNumber || roomCount < 1) {
-        throw new Error('Please provide valid room details');
+        throw new Error('Lütfen geçerli oda bilgileri girin');
       }
 
       const startNum = parseInt(startRoomNumber);
       if (isNaN(startNum)) {
-        throw new Error('Room number must be a number');
+        throw new Error('Oda numarası sayı olmalıdır');
       }
 
       // Create array of rooms to add
@@ -92,7 +92,7 @@ export default function RoomManagementModal({
       const result = await window.electronAPI.addRooms(roomsToAdd);
 
       if (result.success) {
-        setSuccess(`Successfully added ${roomCount} room(s)!`);
+        setSuccess(`${roomCount} oda başarıyla eklendi!`);
         await loadRooms();
         if (onRoomsUpdated) onRoomsUpdated();
         
@@ -102,7 +102,7 @@ export default function RoomManagementModal({
           setSuccess('');
         }, 2000);
       } else {
-        throw new Error(result.message || 'Failed to add rooms');
+        throw new Error(result.message || 'Odalar eklenemedi');
       }
     } catch (err: any) {
       setError(err.message);
@@ -113,11 +113,11 @@ export default function RoomManagementModal({
 
   const handleRemoveRooms = async () => {
     if (selectedRooms.length === 0) {
-      setError('Please select at least one room to remove');
+      setError('Lütfen çıkarmak için en az bir oda seçin');
       return;
     }
 
-    if (!window.confirm(`Are you sure you want to remove ${selectedRooms.length} room(s)? This cannot be undone.`)) {
+    if (!window.confirm(`${selectedRooms.length} odayı çıkarmak istediğinizden emin misiniz? Bu işlem geri alınamaz.`)) {
       return;
     }
 
@@ -129,7 +129,7 @@ export default function RoomManagementModal({
       const result = await window.electronAPI.removeRooms(selectedRooms);
 
       if (result.success) {
-        setSuccess(`Successfully removed ${selectedRooms.length} room(s)!`);
+        setSuccess(`${selectedRooms.length} oda başarıyla çıkarıldı!`);
         setSelectedRooms([]);
         await loadRooms();
         if (onRoomsUpdated) onRoomsUpdated();
@@ -138,7 +138,7 @@ export default function RoomManagementModal({
           setSuccess('');
         }, 2000);
       } else {
-        throw new Error(result.message || 'Failed to remove rooms');
+        throw new Error(result.message || 'Odalar çıkarılamadı');
       }
     } catch (err: any) {
       setError(err.message);
@@ -178,7 +178,7 @@ export default function RoomManagementModal({
       <div className="bg-sidebar-dark rounded-xl border border-border-color w-full max-w-4xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-color">
-          <h2 className="text-text-primary text-2xl font-bold">Room Management</h2>
+          <h2 className="text-text-primary text-2xl font-bold">Oda Yönetimi</h2>
           <button
             onClick={onClose}
             className="text-text-secondary hover:text-text-primary transition-colors"
@@ -199,7 +199,7 @@ export default function RoomManagementModal({
           >
             <span className="flex items-center justify-center gap-2">
               <span className="material-symbols-outlined">add_circle</span>
-              Add Rooms
+              Oda Ekle
             </span>
           </button>
           <button
@@ -212,7 +212,7 @@ export default function RoomManagementModal({
           >
             <span className="flex items-center justify-center gap-2">
               <span className="material-symbols-outlined">remove_circle</span>
-              Remove Rooms
+              Oda Çıkar
             </span>
           </button>
         </div>
@@ -237,7 +237,7 @@ export default function RoomManagementModal({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-text-primary text-sm font-medium">
-                    Starting Room Number *
+                    Başlangıç Oda Numarası *
                   </label>
                   <input
                     type="text"
@@ -249,13 +249,13 @@ export default function RoomManagementModal({
                     autoComplete="off"
                   />
                   <p className="text-text-secondary text-xs">
-                    Rooms will be numbered sequentially from this number
+                    Odalar bu numaradan başlayarak sırayla numaralandırılacak
                   </p>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-text-primary text-sm font-medium">
-                    Number of Rooms *
+                    Oda Sayısı *
                   </label>
                   <input
                     type="number"
@@ -267,13 +267,13 @@ export default function RoomManagementModal({
                     required
                   />
                   <p className="text-text-secondary text-xs">
-                    Add up to 50 rooms at once
+                    Bir seferde en fazla 50 oda ekleyin
                   </p>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-text-primary text-sm font-medium">
-                    Floor Number *
+                    Kat Numarası *
                   </label>
                   <input
                     type="number"
@@ -288,7 +288,7 @@ export default function RoomManagementModal({
 
                 <div className="space-y-2">
                   <label className="text-text-primary text-sm font-medium">
-                    Room Type *
+                    Oda Tipi *
                   </label>
                   <select
                     value={roomType}
@@ -296,15 +296,15 @@ export default function RoomManagementModal({
                     className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary [color-scheme:dark]"
                     required
                   >
-                    <option value="Standard">Standard</option>
+                    <option value="Standard">Standart</option>
                     <option value="Deluxe">Deluxe</option>
-                    <option value="Suite">Suite</option>
+                    <option value="Suite">Suit</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-text-primary text-sm font-medium">
-                    Price per Night (₺) *
+                    Gecelik Fiyat (₺) *
                   </label>
                   <input
                     type="number"
@@ -319,7 +319,7 @@ export default function RoomManagementModal({
 
                 <div className="space-y-2">
                   <label className="text-text-primary text-sm font-medium">
-                    Max Guests *
+                    Maksimum Misafir *
                   </label>
                   <input
                     type="number"
@@ -336,17 +336,17 @@ export default function RoomManagementModal({
               {/* Preview */}
               {startRoomNumber && roomCount > 0 && (
                 <div className="bg-card-dark rounded-lg p-4 border border-border-color">
-                  <p className="text-text-secondary text-sm mb-2">Preview:</p>
+                  <p className="text-text-secondary text-sm mb-2">Önizleme:</p>
                   <p className="text-text-primary text-sm">
-                    Will create rooms: <span className="font-bold">
+                    Oluşturulacak odalar: <span className="font-bold">
                       {startRoomNumber} - {parseInt(startRoomNumber) + roomCount - 1}
-                    </span> ({roomCount} rooms)
+                    </span> ({roomCount} oda)
                   </p>
                   <p className="text-text-primary text-sm">
-                    Floor: <span className="font-bold">{floorNumber}</span> | 
-                    Type: <span className="font-bold">{roomType}</span> | 
-                    Price: <span className="font-bold">${pricePerNight}/night</span> | 
-                    Max: <span className="font-bold">{maxGuests} guests</span>
+                    Kat: <span className="font-bold">{floorNumber}</span> | 
+                    Tip: <span className="font-bold">{roomType === 'Standard' ? 'Standart' : roomType === 'Deluxe' ? 'Deluxe' : 'Suit'}</span> | 
+                    Fiyat: <span className="font-bold">₺{pricePerNight}/gece</span> | 
+                    Maks: <span className="font-bold">{maxGuests} misafir</span>
                   </p>
                 </div>
               )}
@@ -358,14 +358,14 @@ export default function RoomManagementModal({
                   className="flex-1 px-4 py-2 bg-card-dark text-text-primary rounded-lg hover:bg-hover-dark transition-colors"
                   disabled={loading}
                 >
-                  Cancel
+                  İptal
                 </button>
                 <button
                   type="submit"
                   className="flex-1 px-4 py-2 bg-primary text-text-primary rounded-lg hover:bg-primary/80 transition-colors font-medium disabled:opacity-50"
                   disabled={loading}
                 >
-                  {loading ? 'Adding...' : `Add ${roomCount} Room${roomCount > 1 ? 's' : ''}`}
+                  {loading ? 'Ekleniyor...' : `${roomCount} Oda Ekle`}
                 </button>
               </div>
             </form>
@@ -376,20 +376,20 @@ export default function RoomManagementModal({
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <p className="text-text-secondary text-sm">
-                  Select rooms to remove ({selectedRooms.length} selected)
+                  Çıkarmak için odaları seçin ({selectedRooms.length} seçili)
                 </p>
                 <div className="flex gap-2">
                   <button
                     onClick={selectAllRooms}
                     className="text-xs px-3 py-1 bg-card-dark text-text-primary rounded hover:bg-hover-dark transition-colors"
                   >
-                    Select All
+                    Tümünü Seç
                   </button>
                   <button
                     onClick={deselectAllRooms}
                     className="text-xs px-3 py-1 bg-card-dark text-text-primary rounded hover:bg-hover-dark transition-colors"
                   >
-                    Deselect All
+                    Seçimi Kaldır
                   </button>
                 </div>
               </div>
@@ -398,7 +398,7 @@ export default function RoomManagementModal({
                 {Object.keys(roomsByFloor).sort((a, b) => Number(a) - Number(b)).map(floorNum => (
                   <div key={floorNum}>
                     <h3 className="text-text-primary font-bold text-sm mb-2">
-                      Floor {floorNum}
+                      Kat {floorNum}
                     </h3>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                       {roomsByFloor[Number(floorNum)].map(room => (
@@ -417,9 +417,9 @@ export default function RoomManagementModal({
                           <p className="text-text-primary font-bold text-sm">
                             {room.RoomNumber}
                           </p>
-                          <p className="text-text-secondary text-xs">{room.Type}</p>
+                          <p className="text-text-secondary text-xs">{room.Type === 'Standard' ? 'Standart' : room.Type === 'Deluxe' ? 'Deluxe' : 'Suit'}</p>
                           {room.Status === 'Occupied' && (
-                            <p className="text-yellow-400 text-xs mt-1">Occupied</p>
+                            <p className="text-yellow-400 text-xs mt-1">Dolu</p>
                           )}
                         </button>
                       ))}
@@ -434,14 +434,14 @@ export default function RoomManagementModal({
                   className="flex-1 px-4 py-2 bg-card-dark text-text-primary rounded-lg hover:bg-hover-dark transition-colors"
                   disabled={loading}
                 >
-                  Cancel
+                  İptal
                 </button>
                 <button
                   onClick={handleRemoveRooms}
                   className="flex-1 px-4 py-2 bg-red-600 text-text-primary rounded-lg hover:bg-red-700 transition-colors font-medium disabled:opacity-50"
                   disabled={loading || selectedRooms.length === 0}
                 >
-                  {loading ? 'Removing...' : `Remove ${selectedRooms.length} Room${selectedRooms.length !== 1 ? 's' : ''}`}
+                  {loading ? 'Çıkarılıyor...' : `${selectedRooms.length} Oda Çıkar`}
                 </button>
               </div>
             </div>

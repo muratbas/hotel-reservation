@@ -40,8 +40,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   login: (email: string, password: string) => ipcRenderer.invoke('auth:login', email, password),
   getCurrentManager: (managerId: number) => ipcRenderer.invoke('auth:get-current-manager', managerId),
   getManagers: () => ipcRenderer.invoke('auth:get-managers'),
-  createManager: (email: string, password: string, fullName: string) => 
-    ipcRenderer.invoke('auth:create-manager', email, password, fullName),
+  createManager: (email: string, password: string, fullName: string, role?: string) => 
+    ipcRenderer.invoke('auth:create-manager', email, password, fullName, role),
   deleteManager: (managerId: number, currentManagerId: number) => 
     ipcRenderer.invoke('auth:delete-manager', managerId, currentManagerId),
   
@@ -79,7 +79,7 @@ export interface ElectronAPI {
   login: (email: string, password: string) => Promise<{ success: boolean; manager?: any; message?: string }>;
   getCurrentManager: (managerId: number) => Promise<{ success: boolean; manager?: any; message?: string }>;
   getManagers: () => Promise<{ success: boolean; managers?: any[]; message?: string }>;
-  createManager: (email: string, password: string, fullName: string) => Promise<{ success: boolean; managerId?: number; message?: string }>;
+  createManager: (email: string, password: string, fullName: string, role?: string) => Promise<{ success: boolean; managerId?: number; message?: string }>;
   deleteManager: (managerId: number, currentManagerId: number) => Promise<{ success: boolean; message?: string }>;
 }
 

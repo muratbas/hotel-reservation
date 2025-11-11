@@ -36,7 +36,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background-dark">
-      <TitleBar title="Hotel Reservation - Login" />
+      <TitleBar title="Otel Rezervasyon Sistemi - Giriş" />
       
       <div className="flex-1 flex items-center justify-center">
       {/* Background decoration */}
@@ -51,8 +51,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-2xl mb-4">
             <span className="material-symbols-outlined text-4xl text-primary">hotel</span>
           </div>
-          <h1 className="text-3xl font-bold text-text-primary mb-2">Hotel Management System</h1>
-          <p className="text-text-secondary">Sign in to your account</p>
+          <h1 className="text-3xl font-bold text-text-primary mb-2">Otel Yönetim Sistemi</h1>
+          <p className="text-text-secondary">Hesabınıza giriş yapın</p>
         </div>
 
         {/* Login Card */}
@@ -61,7 +61,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">
-                Email Address
+                E-posta Adresi
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -83,7 +83,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-2">
-                Password
+                Şifre
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -95,7 +95,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 bg-hover-dark border border-border-color rounded-xl text-text-primary placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all [color-scheme:dark]"
-                  placeholder="Enter your password"
+                  placeholder="Şifrenizi girin"
                   required
                   autoComplete="current-password"
                 />
@@ -119,12 +119,12 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               {loading ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Logging in...</span>
+                  <span>Giriş yapılıyor...</span>
                 </>
               ) : (
                 <>
                   <span className="material-symbols-outlined">login</span>
-                  <span>Login</span>
+                  <span>Giriş Yap</span>
                 </>
               )}
             </button>
@@ -133,14 +133,14 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           {/* Info Footer */}
           <div className="mt-6 pt-6 border-t border-border-color">
             <p className="text-xs text-text-secondary text-center">
-              Default credentials: <span className="text-primary">admin@hotel.com</span> / <span className="text-primary">admin123</span>
+              Varsayılan bilgiler: <span className="text-primary">admin@hotel.com</span> / <span className="text-primary">admin123</span>
             </p>
           </div>
         </div>
 
         {/* Footer */}
         <p className="text-center text-text-secondary text-sm mt-6">
-          © 2025 Hotel Reservation System
+          © 2025 Otel Rezervasyon Sistemi
         </p>
       </div>
       </div>

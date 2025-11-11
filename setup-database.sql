@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS Managers (
     Email VARCHAR(100) NOT NULL UNIQUE,
     PasswordHash VARCHAR(255) NOT NULL,
     FullName VARCHAR(100) NOT NULL,
+    Role ENUM('Yönetici', 'Personel') DEFAULT 'Personel',
     CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     LastLoginAt DATETIME
 );
@@ -70,8 +71,8 @@ CREATE TABLE IF NOT EXISTS Reservations (
 -- IMPORTANT: Change this password after first login!
 
 -- Check if admin exists, if not create it
-INSERT INTO Managers (Email, PasswordHash, FullName, CreatedAt)
-SELECT 'admin@hotel.com', '$2b$10$W1WHyps7Ozl2NyPRovTPqu/i96dgIA2ViiUGOv.lNPXiWDWESz.Im', 'Administrator', NOW()
+INSERT INTO Managers (Email, PasswordHash, FullName, Role, CreatedAt)
+SELECT 'admin@hotel.com', '$2b$10$W1WHyps7Ozl2NyPRovTPqu/i96dgIA2ViiUGOv.lNPXiWDWESz.Im', 'Administrator', 'Yönetici', NOW()
 WHERE NOT EXISTS (SELECT 1 FROM Managers WHERE Email = 'admin@hotel.com');
 
 -- ============================================

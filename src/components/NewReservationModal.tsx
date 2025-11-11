@@ -174,7 +174,7 @@ export default function NewReservationModal({
       <div className="bg-sidebar-dark rounded-xl border border-border-color w-full max-w-3xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border-color">
-          <h2 className="text-text-primary text-2xl font-bold">New Reservation</h2>
+          <h2 className="text-text-primary text-2xl font-bold">Yeni Rezervasyon</h2>
           <button
             onClick={onClose}
             className="text-text-secondary hover:text-text-primary transition-colors"
@@ -195,13 +195,13 @@ export default function NewReservationModal({
           {/* Success Message */}
           {success && (
             <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
-              <p className="text-green-300 text-sm">✅ Reservation created successfully!</p>
+              <p className="text-green-300 text-sm">✅ Rezervasyon başarıyla oluşturuldu!</p>
             </div>
           )}
 
           {/* Room Selection */}
           <div className="space-y-2">
-            <label className="text-text-primary text-sm font-medium">Room *</label>
+            <label className="text-text-primary text-sm font-medium">Oda *</label>
             <select
               value={selectedRoomId || ''}
               onChange={(e) => setSelectedRoomId(Number(e.target.value))}
@@ -209,7 +209,7 @@ export default function NewReservationModal({
               disabled={!!preselectedRoom}
               required
             >
-              <option value="">Select a room</option>
+              <option value="">Oda seçin</option>
               {rooms.map((room) => (
                 <option key={room.RoomId} value={room.RoomId}>
                   Room {room.RoomNumber} - {room.Type} (₺{Number(room.PricePerNight).toFixed(2)}/night)
@@ -218,7 +218,7 @@ export default function NewReservationModal({
             </select>
             {selectedRoom && (
               <p className="text-text-secondary text-xs">
-                Floor {selectedRoom.FloorNumber} • Max {selectedRoom.MaxGuests} guests
+                Kat {selectedRoom.FloorNumber} • Maks {selectedRoom.MaxGuests} misafir
               </p>
             )}
           </div>
@@ -234,7 +234,7 @@ export default function NewReservationModal({
                   : 'bg-card-dark text-text-secondary hover:bg-hover-dark'
               }`}
             >
-              New Guest
+              Yeni Misafir
             </button>
             <button
               type="button"
@@ -245,7 +245,7 @@ export default function NewReservationModal({
                   : 'bg-card-dark text-text-secondary hover:bg-hover-dark'
               }`}
             >
-              Existing Guest
+              Mevcut Misafir
             </button>
           </div>
 
@@ -253,7 +253,7 @@ export default function NewReservationModal({
           {isNewGuest ? (
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-text-primary text-sm font-medium">Guest Name *</label>
+                <label className="text-text-primary text-sm font-medium">Misafir Adı *</label>
                 <input
                   type="text"
                   value={guestName}
@@ -266,7 +266,7 @@ export default function NewReservationModal({
               </div>
 
               <div className="space-y-2">
-                <label className="text-text-primary text-sm font-medium">Phone Number *</label>
+                <label className="text-text-primary text-sm font-medium">Telefon Numarası *</label>
                 <input
                   type="tel"
                   value={guestPhone}
@@ -279,7 +279,7 @@ export default function NewReservationModal({
               </div>
 
               <div className="space-y-2">
-                <label className="text-text-primary text-sm font-medium">Email (Optional)</label>
+                <label className="text-text-primary text-sm font-medium">E-posta (Opsiyonel)</label>
                 <input
                   type="email"
                   value={guestEmail}
@@ -291,29 +291,29 @@ export default function NewReservationModal({
               </div>
 
               <div className="space-y-2">
-                <label className="text-text-primary text-sm font-medium">Gender (Optional)</label>
+                <label className="text-text-primary text-sm font-medium">Cinsiyet (Opsiyonel)</label>
                 <select
                   value={guestGender}
                   onChange={(e) => setGuestGender(e.target.value)}
                   className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary [color-scheme:dark]"
                 >
-                  <option value="">Prefer not to say</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
+                  <option value="">Belirtmek istemiyorum</option>
+                  <option value="Male">Erkek</option>
+                  <option value="Female">Kadın</option>
+                  <option value="Other">Diğer</option>
                 </select>
               </div>
             </div>
           ) : (
             <div className="space-y-2">
-              <label className="text-text-primary text-sm font-medium">Select Guest *</label>
+              <label className="text-text-primary text-sm font-medium">Misafir Seçin *</label>
               <select
                 value={selectedGuestId || ''}
                 onChange={(e) => setSelectedGuestId(Number(e.target.value))}
                 className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary [color-scheme:dark]"
                 required
               >
-                <option value="">Select a guest</option>
+                <option value="">Misafir seçin</option>
                 {guests.map((guest) => (
                   <option key={guest.GuestId} value={guest.GuestId}>
                     {guest.FullName} - {guest.PhoneNumber}
@@ -326,7 +326,7 @@ export default function NewReservationModal({
           {/* Dates */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-text-primary text-sm font-medium">Check-In Date *</label>
+              <label className="text-text-primary text-sm font-medium">Giriş Tarihi *</label>
               <input
                 type="date"
                 value={checkInDate}
@@ -338,7 +338,7 @@ export default function NewReservationModal({
             </div>
 
             <div className="space-y-2">
-              <label className="text-text-primary text-sm font-medium">Check-Out Date *</label>
+              <label className="text-text-primary text-sm font-medium">Çıkış Tarihi *</label>
               <input
                 type="date"
                 value={checkOutDate}
@@ -352,7 +352,7 @@ export default function NewReservationModal({
 
           {/* Number of Guests */}
           <div className="space-y-2">
-            <label className="text-text-primary text-sm font-medium">Number of Guests</label>
+            <label className="text-text-primary text-sm font-medium">Misafir Sayısı</label>
             <input
               type="number"
               value={numberOfGuests}
@@ -364,20 +364,20 @@ export default function NewReservationModal({
             />
             {selectedRoom && numberOfGuests > selectedRoom.MaxGuests && (
               <p className="text-red-400 text-xs">
-                ⚠️ This room can accommodate max {selectedRoom.MaxGuests} guests
+                ⚠️ Bu oda maksimum {selectedRoom.MaxGuests} misafir alabilir
               </p>
             )}
           </div>
 
           {/* Staff Notes */}
           <div className="space-y-2">
-            <label className="text-text-primary text-sm font-medium">Staff Notes (Optional)</label>
+            <label className="text-text-primary text-sm font-medium">Personel Notları (Opsiyonel)</label>
             <textarea
               value={staffNotes}
               onChange={(e) => setStaffNotes(e.target.value)}
               className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary resize-none placeholder-text-secondary/50"
               rows={3}
-              placeholder="Any special requests or notes..."
+              placeholder="Özel istekler veya notlar..."
               autoComplete="off"
             />
           </div>
@@ -390,14 +390,14 @@ export default function NewReservationModal({
               className="flex-1 px-4 py-2 bg-card-dark text-text-primary rounded-lg hover:bg-hover-dark transition-colors"
               disabled={loading}
             >
-              Cancel
+              İptal
             </button>
             <button
               type="submit"
               className="flex-1 px-4 py-2 bg-primary text-text-primary rounded-lg hover:bg-primary/80 transition-colors font-medium disabled:opacity-50"
               disabled={loading || success}
             >
-              {loading ? 'Creating...' : 'Create Reservation'}
+              {loading ? 'Oluşturuluyor...' : 'Rezervasyon Oluştur'}
             </button>
           </div>
         </form>

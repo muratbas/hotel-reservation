@@ -3,6 +3,7 @@
 export type RoomType = 'Standard' | 'Deluxe' | 'Suite';
 export type RoomStatus = 'Available' | 'Occupied' | 'Maintenance';
 export type ReservationStatus = 'Active' | 'CheckedOut' | 'Cancelled';
+export type UserRole = 'Yönetici' | 'Personel'; // Manager | Staff
 
 export interface Room {
   RoomId: number;
@@ -50,6 +51,7 @@ export interface Manager {
   Email: string;
   PasswordHash: string;
   FullName: string;
+  Role: UserRole;
   CreatedAt: Date;
   LastLoginAt?: Date;
 }

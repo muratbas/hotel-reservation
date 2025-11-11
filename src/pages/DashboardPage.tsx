@@ -118,7 +118,7 @@ export default function DashboardPage() {
   if (!stats) {
     return (
       <div className="flex items-center justify-center h-full">
-        <p className="text-[#92adc9] text-lg">Loading dashboard...</p>
+        <p className="text-[#92adc9] text-lg">Panel yükleniyor...</p>
       </div>
     );
   }
@@ -130,7 +130,7 @@ export default function DashboardPage() {
         {/* Header */}
         <header className="flex flex-wrap justify-between gap-4 items-center">
           <h2 className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">
-            Hotel Performance Dashboard
+            Otel Performans Paneli
           </h2>
         </header>
 
@@ -139,7 +139,7 @@ export default function DashboardPage() {
         <div className="flex flex-col gap-2 rounded-lg p-6 border border-[#324d67]">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-white">sell</span>
-            <p className="text-white text-base font-medium leading-normal">Occupancy Rate</p>
+            <p className="text-white text-base font-medium leading-normal">Doluluk Oranı</p>
           </div>
           <p className="text-white tracking-light text-2xl font-bold leading-tight">
             {stats.occupancyRate}%
@@ -152,7 +152,7 @@ export default function DashboardPage() {
         <div className="flex flex-col gap-2 rounded-lg p-6 border border-[#324d67]">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-white">login</span>
-            <p className="text-white text-base font-medium leading-normal">Today's Check-Ins</p>
+            <p className="text-white text-base font-medium leading-normal">Bugünkü Giriş Sayısı</p>
           </div>
           <p className="text-white tracking-light text-2xl font-bold leading-tight">
             {stats.todayCheckIns}
@@ -165,7 +165,7 @@ export default function DashboardPage() {
         <div className="flex flex-col gap-2 rounded-lg p-6 border border-[#324d67]">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-white">logout</span>
-            <p className="text-white text-base font-medium leading-normal">Today's Check-Outs</p>
+            <p className="text-white text-base font-medium leading-normal">Bugünkü Çıkış Sayısı</p>
           </div>
           <p className="text-white tracking-light text-2xl font-bold leading-tight">
             {stats.todayCheckOuts}
@@ -182,7 +182,7 @@ export default function DashboardPage() {
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-white">trending_up</span>
-              <p className="text-white text-base font-medium leading-normal">Booking Trends</p>
+              <p className="text-white text-base font-medium leading-normal">Rezervasyon Trendleri</p>
             </div>
             <div className="flex items-baseline gap-2">
               <p className="text-white tracking-light text-2xl font-bold leading-tight truncate">
@@ -202,7 +202,7 @@ export default function DashboardPage() {
                 timeFilter === 'today' ? 'bg-[#324d67]' : ''
               }`}
             >
-              Today
+              Bugün
             </button>
             <button
               onClick={() => setTimeFilter('7days')}
@@ -210,7 +210,7 @@ export default function DashboardPage() {
                 timeFilter === '7days' ? 'bg-[#324d67]' : ''
               }`}
             >
-              Last 7 Days
+              Son 7 Gün
             </button>
             <button
               onClick={() => setTimeFilter('30days')}
@@ -218,7 +218,7 @@ export default function DashboardPage() {
                 timeFilter === '30days' ? 'bg-[#324d67]' : ''
               }`}
             >
-              Last 30 Days
+              Son 30 Gün
             </button>
           </div>
         </div>
@@ -236,14 +236,14 @@ export default function DashboardPage() {
         {/* Header */}
         <header className="flex flex-wrap justify-between gap-4 items-center">
           <h2 className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">
-            Upcoming Events
+            Yaklaşan Etkinlikler
           </h2>
           <button
             onClick={() => setShowEventModal(true)}
             className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-600 text-white rounded-lg transition-colors"
           >
             <span className="material-symbols-outlined">add</span>
-            <span className="text-sm font-medium">Add Event</span>
+            <span className="text-sm font-medium">Etkinlik Ekle</span>
           </button>
         </header>
 
@@ -253,8 +253,8 @@ export default function DashboardPage() {
             {events.length === 0 ? (
               <div className="text-center py-8">
                 <span className="material-symbols-outlined text-6xl text-[#324d67] mb-2">event</span>
-                <p className="text-[#92adc9] text-sm">No upcoming events</p>
-                <p className="text-[#92adc9] text-xs mt-1">Click + to add</p>
+                <p className="text-[#92adc9] text-sm">Yaklaşan etkinlik yok</p>
+                <p className="text-[#92adc9] text-xs mt-1">Eklemek için + tıklayın</p>
               </div>
             ) : (
               events.map(event => (
@@ -286,44 +286,44 @@ export default function DashboardPage() {
       {showEventModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowEventModal(false)}>
           <div className="bg-[#192633] rounded-lg p-6 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-white text-xl font-bold mb-4">Create Event</h3>
+            <h3 className="text-white text-xl font-bold mb-4">Etkinlik Oluştur</h3>
             
             <div className="flex flex-col gap-4">
               <div>
-                <label className="text-[#92adc9] text-sm mb-2 block">Title</label>
+                <label className="text-[#92adc9] text-sm mb-2 block">Başlık</label>
                 <input
                   type="text"
                   value={newEvent.title}
                   onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
                   className="w-full px-4 py-2 bg-[#233648] text-white border border-[#324d67] rounded-lg focus:outline-none focus:border-[#137fec]"
-                  placeholder="Event title"
+                  placeholder="Etkinlik başlığı"
                 />
               </div>
 
               <div>
-                <label className="text-[#92adc9] text-sm mb-2 block">Description</label>
+                <label className="text-[#92adc9] text-sm mb-2 block">Açıklama</label>
                 <textarea
                   value={newEvent.description}
                   onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
                   className="w-full px-4 py-2 bg-[#233648] text-white border border-[#324d67] rounded-lg focus:outline-none focus:border-[#137fec] resize-none"
                   rows={3}
-                  placeholder="Event description"
+                  placeholder="Etkinlik açıklaması"
                 />
               </div>
 
               <div>
-                <label className="text-[#92adc9] text-sm mb-2 block">Date</label>
+                <label className="text-[#92adc9] text-sm mb-2 block">Tarih</label>
                 <input
                   type="text"
                   value={newEvent.date}
                   onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
                   className="w-full px-4 py-2 bg-[#233648] text-white border border-[#324d67] rounded-lg focus:outline-none focus:border-[#137fec]"
-                  placeholder="e.g., Dec 24-26 or Jan 10-12"
+                  placeholder="Örn: 24-26 Aralık veya 10-12 Ocak"
                 />
               </div>
 
               <div>
-                <label className="text-[#92adc9] text-sm mb-2 block">Color</label>
+                <label className="text-[#92adc9] text-sm mb-2 block">Renk</label>
                 <div className="flex gap-2">
                   {(['primary', 'warning', 'success'] as const).map(color => (
                     <button
@@ -338,18 +338,18 @@ export default function DashboardPage() {
               </div>
 
               <div>
-                <label className="text-[#92adc9] text-sm mb-2 block">Icon</label>
+                <label className="text-[#92adc9] text-sm mb-2 block">İkon</label>
                 <select
                   value={newEvent.icon}
                   onChange={(e) => setNewEvent({ ...newEvent, icon: e.target.value })}
                   className="w-full px-4 py-2 bg-[#233648] text-white border border-[#324d67] rounded-lg focus:outline-none focus:border-[#137fec]"
                 >
-                  <option value="calendar_month">Calendar</option>
-                  <option value="group">Group</option>
-                  <option value="construction">Construction</option>
-                  <option value="celebration">Celebration</option>
-                  <option value="warning">Warning</option>
-                  <option value="event">Event</option>
+                  <option value="calendar_month">Takvim</option>
+                  <option value="group">Grup</option>
+                  <option value="construction">İnşaat</option>
+                  <option value="celebration">Kutlama</option>
+                  <option value="warning">Uyarı</option>
+                  <option value="event">Etkinlik</option>
                 </select>
               </div>
 
@@ -358,13 +358,13 @@ export default function DashboardPage() {
                   onClick={handleCreateEvent}
                   className="flex-1 px-4 py-2 bg-[#137fec] text-white rounded-lg hover:bg-[#1068c9] transition-colors"
                 >
-                  Create Event
+                  Etkinlik Oluştur
                 </button>
                 <button
                   onClick={() => setShowEventModal(false)}
                   className="flex-1 px-4 py-2 bg-[#233648] text-white rounded-lg hover:bg-[#324d67] transition-colors"
                 >
-                  Cancel
+                  İptal
                 </button>
               </div>
             </div>
@@ -382,8 +382,8 @@ function BookingChart({ data }: { data: { date: string; count: number }[] }) {
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
           <span className="material-symbols-outlined text-6xl text-[#324d67] mb-2">trending_up</span>
-          <p className="text-[#92adc9] text-lg">No booking data yet</p>
-          <p className="text-[#92adc9] text-sm mt-1">Create some reservations to see trends!</p>
+          <p className="text-[#92adc9] text-lg">Henüz rezervasyon verisi yok</p>
+          <p className="text-[#92adc9] text-sm mt-1">Trend görmek için rezervasyon oluşturun!</p>
         </div>
       </div>
     );
