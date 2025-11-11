@@ -675,7 +675,7 @@ function App() {
                   <div
                     key={room.RoomId}
                     onClick={() => handleRoomClick(room)}
-                    className={`group relative p-4 rounded-lg ${statusColor} border cursor-pointer transition-all hover:scale-105`}
+                    className={`relative p-4 rounded-lg ${statusColor} border cursor-pointer transition-all hover:scale-105`}
                   >
                     <div className="flex justify-between items-center">
                       <span className="text-text-primary font-bold">{room.RoomNumber}</span>
@@ -684,18 +684,7 @@ function App() {
                     <p className={`${textColor} text-sm`}>
                       {room.Status === 'Available' ? 'Müsait' : room.Status === 'Occupied' ? 'Dolu' : 'Bakımda'}
                     </p>
-
-                    {/* Hover Details */}
-                    <div className="absolute left-0 bottom-full mb-2 w-full bg-card-dark p-3 rounded-lg shadow-lg z-10 hidden group-hover:block">
-                      <p className="text-text-primary font-bold">Oda {room.RoomNumber}</p>
-                      <p className="text-text-secondary">
-                        {room.Type === 'Standard' ? 'Standart' : room.Type === 'Deluxe' ? 'Deluxe' : 'Suit'}
-                      </p>
-                      {room.Status === 'Occupied' && (
-                        <p className="text-text-primary text-sm mt-1">Misafir: Yükleniyor...</p>
-                      )}
-                      </div>
-                    </div>
+                  </div>
                   );
                 })}
                   </div>
