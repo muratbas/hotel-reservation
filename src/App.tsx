@@ -92,7 +92,7 @@ function App() {
   // Modal penceresini kapatma fonksiyonu
   const handleCloseModal = () => {
     setIsModalOpen(false);  // Önce modalı kapat
-    setTimeout(() => setSelectedRoom(null), 300); // Animasyon için 300ms bekle, sonra seçili odayı temizle
+    setTimeout(() => setSelectedRoom(null), 300); // Animasyon için 300ms bekle, sonra seçili odayı temizlee
   };
 
   // Sayfa değiştirme fonksiyonu (sayfalama için)
