@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Manager } from '../types/database';
 import TitleBar from '../components/TitleBar';
+import { isManagerRole } from '../utils/roleHelper';
 
 interface SettingsPageProps {
   currentManager: Manager;
@@ -15,8 +16,8 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
-  // Check if current user is a Manager
-  const isManager = currentManager.Role === 'Yönetici';
+  // Check if current user is a Manager (handles encoding issues)
+  const isManager = isManagerRole(currentManager.Role);
 
   const loadManagers = async () => {
     setLoading(true);
@@ -89,7 +90,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
   };
 
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString('en-US', {
+    return new Date(date).toLocaleDateString('tr-TR', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
@@ -238,11 +239,11 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
                             </span>
                           )}
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            manager.Role === 'Yönetici' 
+                            isManagerRole(manager.Role) 
                               ? 'bg-blue-500/20 text-blue-300' 
                               : 'bg-green-500/20 text-green-300'
                           }`}>
-                            {manager.Role}
+                            {isManagerRole(manager.Role) ? 'Yönetici' : 'Personel'}
                           </span>
                         </div>
                         <p className="text-text-secondary text-sm">{manager.Email}</p>
@@ -295,8 +296,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
                 </div>
                 <div className="p-4 bg-hover-dark rounded-lg">
                   <label className="text-text-secondary text-sm block mb-1">Rol</label>
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-500/20 text-green-300">
-                    {currentManager.Role}
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    isManager ? 'bg-blue-500/20 text-blue-300' : 'bg-green-500/20 text-green-300'
+                  }`}>
+                    {isManager ? 'Yönetici' : 'Personel'}
                   </span>
                 </div>
                 <div className="p-4 bg-hover-dark rounded-lg">

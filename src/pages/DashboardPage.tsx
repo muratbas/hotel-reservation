@@ -411,7 +411,7 @@ function BookingChart({ data }: { data: { date: string; count: number }[] }) {
       <div className="absolute inset-0 flex items-end justify-between px-4 pb-2 text-[#92adc9] text-xs">
         {data.map((d, i) => (
           <span key={i} className="text-center">
-            {typeof d.date === 'string' ? d.date : new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            {typeof d.date === 'string' ? d.date : new Date(d.date).toLocaleDateString('tr-TR', { month: 'short', day: 'numeric' })}
           </span>
         ))}
       </div>

@@ -3,7 +3,7 @@
 export type RoomType = 'Standard' | 'Deluxe' | 'Suite';
 export type RoomStatus = 'Available' | 'Occupied' | 'Maintenance';
 export type ReservationStatus = 'Active' | 'CheckedOut' | 'Cancelled';
-export type UserRole = 'Yönetici' | 'Personel'; // Manager | Staff
+export type UserRole = 'Yönetici' | 'Personel' | 'Manager' | 'Staff'; // Manager | Staff (supports both Turkish and English)
 
 export interface Room {
   RoomId: number;

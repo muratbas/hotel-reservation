@@ -43,6 +43,7 @@ import LoginPage from './pages/LoginPage';
 import SettingsPage from './pages/SettingsPage';
 import TitleBar from './components/TitleBar';
 import { downloadCSV } from './utils/csvExport';
+import { isManagerRole } from './utils/roleHelper';
 
 // Ana uygulama komponenti - tüm uygulamayı yöneten merkezi bileşen
 function App() {
@@ -287,7 +288,7 @@ function App() {
             {/* Navigation Menu */}
             <nav className="flex flex-col gap-2">
               {/* Only show Dashboard for Yönetici (Manager) */}
-              {currentManager.Role === 'Yönetici' && (
+              {isManagerRole(currentManager.Role) && (
                 <button 
                   onClick={() => setCurrentView('dashboard')}
                   className="flex items-center gap-3 px-3 py-2 rounded-lg bg-hover-dark text-text-primary"
@@ -364,7 +365,7 @@ function App() {
             {/* Navigation Menu */}
             <nav className="flex flex-col gap-2">
               {/* Only show Dashboard for Yönetici (Manager) */}
-              {currentManager.Role === 'Yönetici' && (
+              {isManagerRole(currentManager.Role) && (
                 <button 
                   onClick={() => setCurrentView('dashboard')}
                   className="flex items-center gap-3 px-3 py-2 rounded-lg text-text-primary hover:bg-hover-dark transition-colors"
@@ -440,7 +441,7 @@ function App() {
           {/* Navigation Menu */}
           <nav className="flex flex-col gap-2">
             {/* Only show Dashboard for Yönetici (Manager) */}
-            {currentManager.Role === 'Yönetici' && (
+            {isManagerRole(currentManager.Role) && (
               <button 
                 onClick={() => setCurrentView('dashboard')}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg text-text-primary hover:bg-hover-dark transition-colors"

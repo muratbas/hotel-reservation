@@ -18,11 +18,12 @@ const __dirname = path.dirname(__filename);
 // 4. Copy and paste your credentials below
 
 const dbConfig = {
-  host: 'mysql.railway.internal',        // Example: containers-us-west-123.railway.app
-  port: 3306,                                    // Your Railway MySQL port (usually not 3306)
-  user: 'root',                                  // Usually 'root'
-  password: 'vXJaPghAVijvAiJyfeYGaYTNFWCODuCM',             // Your Railway MySQL password
-  database: 'railway'                            // Railway's default database name (or 'hotel_reservation' if you created it)
+  host: 'ballast.proxy.rlwy.net',                // Railway public host
+  port: 28816,                                    // Railway MySQL port
+  user: 'root',                                   // Railway user
+  password: 'vXJaPghAVijvAiJyfeYGaYTNFWCODuCM',  // Railway password
+  database: 'railway',                            // Railway database name
+  charset: 'utf8mb4'                              // UTF-8 encoding for Turkish characters (ö, ü, ğ, ş, etc.)
 };
 
 let mainWindow: BrowserWindow | null = null;

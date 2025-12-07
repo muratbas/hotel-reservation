@@ -63,7 +63,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
 
   const formatDate = (date: string | null) => {
     if (!date) return 'Never';
-    return new Date(date).toLocaleDateString('en-US', { 
+    return new Date(date).toLocaleDateString('tr-TR', { 
       month: 'short', 
       day: 'numeric', 
       year: 'numeric' 
@@ -324,7 +324,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
   if (!isOpen) return null;
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', { 
+    return new Date(date).toLocaleDateString('tr-TR', { 
       month: 'long', 
       day: 'numeric', 
       year: 'numeric' 
