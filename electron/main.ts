@@ -4,32 +4,32 @@ import { fileURLToPath } from 'url';
 import * as mysql from 'mysql2/promise';
 import bcrypt from 'bcryptjs';
 
-// Get __dirname equivalent in ES modules
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ============================================
-// DATABASE CONFIGURATION - RAILWAY.APP
-// ============================================
-// Replace these with your actual Railway MySQL credentials:
-// 1. Go to Railway.app dashboard
-// 2. Click on your MySQL service
-// 3. Go to "Connect" tab
-// 4. Copy and paste your credentials below
+
+
+
+
+
+
+
+
 
 const dbConfig = {
-  host: 'ballast.proxy.rlwy.net',                // Railway public host
-  port: 28816,                                    // Railway MySQL port
-  user: 'root',                                   // Railway user
-  password: 'vXJaPghAVijvAiJyfeYGaYTNFWCODuCM',  // Railway password
-  database: 'railway',                            // Railway database name
-  charset: 'utf8mb4'                              // UTF-8 encoding for Turkish characters (ö, ü, ğ, ş, etc.)
+  host: 'ballast.proxy.rlwy.net',                
+  port: 28816,                                    
+  user: 'root',                                   
+  password: 'vXJaPghAVijvAiJyfeYGaYTNFWCODuCM',  
+  database: 'railway',                            
+  charset: 'utf8mb4'                              
 };
 
 let mainWindow: BrowserWindow | null = null;
 let dbConnection: mysql.Connection | null = null;
 
-// Create database connection
+
 async function createDatabaseConnection() {
   try {
     dbConnection = await mysql.createConnection(dbConfig);
@@ -39,7 +39,7 @@ async function createDatabaseConnection() {
   }
 }
 
-// Create the browser window
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1600,
@@ -47,7 +47,7 @@ function createWindow() {
     minWidth: 1200,
     minHeight: 700,
     backgroundColor: '#101922',
-    frame: false, // Remove default title bar
+    frame: false, 
     titleBarStyle: 'hidden',
     webPreferences: {
       preload: path.join(__dirname, './preload.js'),
@@ -57,7 +57,7 @@ function createWindow() {
     },
   });
 
-  // Load the app
+  
   if (process.env.VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
     mainWindow.webContents.openDevTools();
@@ -70,7 +70,7 @@ function createWindow() {
   });
 }
 
-// App lifecycle
+
 app.whenReady().then(async () => {
   await createDatabaseConnection();
   createWindow();
@@ -91,30 +91,30 @@ app.on('window-all-closed', () => {
   }
 });
 
-// IPC Handlers for database operations
 
-// Get all rooms
+
+
 ipcMain.handle('db:get-rooms', async () => {
   if (!dbConnection) throw new Error('Database not connected');
   const [rows] = await dbConnection.execute('SELECT * FROM Rooms ORDER BY RoomNumber');
   return rows;
 });
 
-// Get room by ID
+
 ipcMain.handle('db:get-room', async (_event, roomId: number) => {
   if (!dbConnection) throw new Error('Database not connected');
   const [rows] = await dbConnection.execute('SELECT * FROM Rooms WHERE RoomId = ?', [roomId]);
   return Array.isArray(rows) && rows.length > 0 ? rows[0] : null;
 });
 
-// Get all guests
+
 ipcMain.handle('db:get-guests', async () => {
   if (!dbConnection) throw new Error('Database not connected');
   const [rows] = await dbConnection.execute('SELECT * FROM Guests ORDER BY CreatedAt DESC');
   return rows;
 });
 
-// Get all reservations with details
+
 ipcMain.handle('db:get-reservations', async () => {
   if (!dbConnection) throw new Error('Database not connected');
   const query = `
@@ -136,7 +136,7 @@ ipcMain.handle('db:get-reservations', async () => {
   return rows;
 });
 
-// Get reservation by room ID
+
 ipcMain.handle('db:get-room-reservation', async (_event, roomId: number) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -158,7 +158,7 @@ ipcMain.handle('db:get-room-reservation', async (_event, roomId: number) => {
   return Array.isArray(rows) && rows.length > 0 ? rows[0] : null;
 });
 
-// Test database connection
+
 ipcMain.handle('db:test-connection', async () => {
   try {
     if (!dbConnection) {
@@ -171,7 +171,7 @@ ipcMain.handle('db:test-connection', async () => {
   }
 });
 
-// Check for date conflicts
+
 ipcMain.handle('db:check-date-conflict', async (_event, roomId: number, checkInDate: string, checkOutDate: string) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -197,7 +197,7 @@ ipcMain.handle('db:check-date-conflict', async (_event, roomId: number, checkInD
   return rows[0].count > 0;
 });
 
-// Create new reservation
+
 ipcMain.handle('db:create-reservation', async (_event, data: any) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -206,7 +206,7 @@ ipcMain.handle('db:create-reservation', async (_event, data: any) => {
 
     let guestId = data.guestId;
 
-    // Create new guest if needed
+    
     if (data.isNewGuest) {
       const insertGuest = `
         INSERT INTO Guests (FullName, PhoneNumber, Email, Gender, CreatedAt)
@@ -221,7 +221,7 @@ ipcMain.handle('db:create-reservation', async (_event, data: any) => {
       guestId = result.insertId;
     }
 
-    // Create reservation
+    
     const insertReservation = `
       INSERT INTO Reservations (
         RoomId, GuestId, CheckInDate, CheckOutDate, 
@@ -237,7 +237,7 @@ ipcMain.handle('db:create-reservation', async (_event, data: any) => {
       data.staffNotes
     ]);
 
-    // Update room status to Occupied
+    
     await dbConnection.execute(
       'UPDATE Rooms SET Status = ? WHERE RoomId = ?',
       ['Occupied', data.roomId]
@@ -252,14 +252,14 @@ ipcMain.handle('db:create-reservation', async (_event, data: any) => {
   }
 });
 
-// Check-out a reservation
+
 ipcMain.handle('db:checkout-reservation', async (_event, roomId: number) => {
   if (!dbConnection) throw new Error('Database not connected');
   
   try {
     await dbConnection.beginTransaction();
 
-    // Update reservation status
+    
     await dbConnection.execute(
       `UPDATE Reservations 
        SET Status = 'CheckedOut' 
@@ -267,7 +267,7 @@ ipcMain.handle('db:checkout-reservation', async (_event, roomId: number) => {
       [roomId]
     );
 
-    // Update room status to Available
+    
     await dbConnection.execute(
       'UPDATE Rooms SET Status = ? WHERE RoomId = ?',
       ['Available', roomId]
@@ -282,7 +282,7 @@ ipcMain.handle('db:checkout-reservation', async (_event, roomId: number) => {
   }
 });
 
-// Update reservation
+
 ipcMain.handle('db:update-reservation', async (_event, reservationId: number, data: any) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -310,7 +310,7 @@ ipcMain.handle('db:update-reservation', async (_event, reservationId: number, da
   }
 });
 
-// Add rooms (bulk)
+
 ipcMain.handle('db:add-rooms', async (_event, roomsData: any[]) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -340,14 +340,14 @@ ipcMain.handle('db:add-rooms', async (_event, roomsData: any[]) => {
   }
 });
 
-// Remove rooms (bulk)
+
 ipcMain.handle('db:remove-rooms', async (_event, roomIds: number[]) => {
   if (!dbConnection) throw new Error('Database not connected');
   
   try {
     await dbConnection.beginTransaction();
 
-    // Check if any rooms are occupied
+    
     const checkQuery = `
       SELECT COUNT(*) as count
       FROM Rooms
@@ -359,7 +359,7 @@ ipcMain.handle('db:remove-rooms', async (_event, roomIds: number[]) => {
       throw new Error('Cannot remove occupied rooms. Please check out guests first.');
     }
 
-    // Delete rooms
+    
     const deleteQuery = `DELETE FROM Rooms WHERE RoomId IN (${roomIds.join(',')})`;
     await dbConnection.execute(deleteQuery);
 
@@ -372,7 +372,7 @@ ipcMain.handle('db:remove-rooms', async (_event, roomIds: number[]) => {
   }
 });
 
-// Get all guests with statistics
+
 ipcMain.handle('db:get-guests-with-stats', async () => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -395,7 +395,7 @@ ipcMain.handle('db:get-guests-with-stats', async () => {
   return rows;
 });
 
-// Get guest reservations
+
 ipcMain.handle('db:get-guest-reservations', async (_event, guestId: number) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -415,7 +415,7 @@ ipcMain.handle('db:get-guest-reservations', async (_event, guestId: number) => {
   return rows;
 });
 
-// Update guest information
+
 ipcMain.handle('db:update-guest', async (_event, guestId: number, data: any) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -441,7 +441,7 @@ ipcMain.handle('db:update-guest', async (_event, guestId: number, data: any) => 
   }
 });
 
-// Update room status
+
 ipcMain.handle('db:update-room-status', async (_event, roomId: number, status: string) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -456,7 +456,7 @@ ipcMain.handle('db:update-room-status', async (_event, roomId: number, status: s
   }
 });
 
-// Export data to CSV
+
 ipcMain.handle('db:export-csv', async (_event, type: string) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -502,9 +502,9 @@ ipcMain.handle('db:export-csv', async (_event, type: string) => {
   }
 });
 
-// ===== AUTHENTICATION HANDLERS =====
 
-// Login manager
+
+
 ipcMain.handle('auth:login', async (_event, email: string, password: string) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -533,7 +533,7 @@ ipcMain.handle('auth:login', async (_event, email: string, password: string) => 
       return { success: false, message: 'Invalid email or password' };
     }
     
-    // Update last login time
+    
     await dbConnection.execute(
       `UPDATE Managers SET LastLoginAt = NOW() WHERE ManagerId = ?`,
       [manager.ManagerId]
@@ -541,7 +541,7 @@ ipcMain.handle('auth:login', async (_event, email: string, password: string) => 
     
     console.log('✅ Login successful!');
     
-    // Return manager without password hash
+    
     const { PasswordHash, ...managerData } = manager;
     return { success: true, manager: managerData };
   } catch (error: any) {
@@ -550,7 +550,7 @@ ipcMain.handle('auth:login', async (_event, email: string, password: string) => 
   }
 });
 
-// Get current manager (for session persistence)
+
 ipcMain.handle('auth:get-current-manager', async (_event, managerId: number) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -569,7 +569,7 @@ ipcMain.handle('auth:get-current-manager', async (_event, managerId: number) => 
   }
 });
 
-// Get all managers
+
 ipcMain.handle('auth:get-managers', async () => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -583,12 +583,12 @@ ipcMain.handle('auth:get-managers', async () => {
   }
 });
 
-// Create new manager
+
 ipcMain.handle('auth:create-manager', async (_event, email: string, password: string, fullName: string, role: string = 'Personel') => {
   if (!dbConnection) throw new Error('Database not connected');
   
   try {
-    // Check if email already exists
+    
     const [existing]: any = await dbConnection.execute(
       `SELECT Email FROM Managers WHERE Email = ?`,
       [email]
@@ -598,10 +598,10 @@ ipcMain.handle('auth:create-manager', async (_event, email: string, password: st
       return { success: false, message: 'Email already exists' };
     }
     
-    // Hash password
+    
     const passwordHash = await bcrypt.hash(password, 10);
     
-    // Insert new manager with role
+    
     const query = `INSERT INTO Managers (Email, PasswordHash, FullName, Role, CreatedAt) VALUES (?, ?, ?, ?, NOW())`;
     const [result]: any = await dbConnection.execute(query, [email, passwordHash, fullName, role]);
     
@@ -612,23 +612,23 @@ ipcMain.handle('auth:create-manager', async (_event, email: string, password: st
   }
 });
 
-// Delete manager
+
 ipcMain.handle('auth:delete-manager', async (_event, managerId: number, currentManagerId: number) => {
   if (!dbConnection) throw new Error('Database not connected');
   
   try {
-    // Prevent self-deletion
+    
     if (managerId === currentManagerId) {
       return { success: false, message: 'Cannot delete your own account' };
     }
     
-    // Check if this is the last manager
+    
     const [managers]: any = await dbConnection.execute(`SELECT COUNT(*) as count FROM Managers`);
     if (managers[0].count <= 1) {
       return { success: false, message: 'Cannot delete the last manager' };
     }
     
-    // Delete manager
+    
     const query = `DELETE FROM Managers WHERE ManagerId = ?`;
     await dbConnection.execute(query, [managerId]);
     
@@ -639,7 +639,7 @@ ipcMain.handle('auth:delete-manager', async (_event, managerId: number, currentM
   }
 });
 
-// Get dashboard statistics
+
 ipcMain.handle('db:get-dashboard-stats', async (_event, timeFilter: string) => {
   if (!dbConnection) throw new Error('Database not connected');
   
@@ -647,7 +647,7 @@ ipcMain.handle('db:get-dashboard-stats', async (_event, timeFilter: string) => {
     console.log('📊 Getting dashboard stats for filter:', timeFilter);
     const today = new Date().toISOString().split('T')[0];
     
-    // Calculate occupancy rate
+    
     const [occupancyRows]: any = await dbConnection.execute(`
       SELECT 
         COUNT(*) as total,
@@ -656,21 +656,21 @@ ipcMain.handle('db:get-dashboard-stats', async (_event, timeFilter: string) => {
     `);
     const occupancyRate = Math.round((occupancyRows[0].occupied / occupancyRows[0].total) * 100) || 0;
     
-    // Today's check-ins
+    
     const [checkInsRows]: any = await dbConnection.execute(`
       SELECT COUNT(*) as count FROM Reservations 
       WHERE DATE(CheckInDate) = ? AND Status = 'Active'
     `, [today]);
     const todayCheckIns = checkInsRows[0].count;
     
-    // Today's check-outs
+    
     const [checkOutsRows]: any = await dbConnection.execute(`
       SELECT COUNT(*) as count FROM Reservations 
       WHERE DATE(CheckOutDate) = ? AND Status = 'Active'
     `, [today]);
     const todayCheckOuts = checkOutsRows[0].count;
     
-    // Booking trends based on filter
+    
     let daysBack = 7;
     if (timeFilter === 'today') {
       daysBack = 1;
@@ -693,7 +693,7 @@ ipcMain.handle('db:get-dashboard-stats', async (_event, timeFilter: string) => {
     console.log('📈 Booking trends data:', trendsRows);
     console.log('📊 Total bookings:', totalBookings);
     
-    // Previous period for comparison
+    
     const [prevPeriodRows]: any = await dbConnection.execute(`
       SELECT COUNT(*) as count
       FROM Reservations
@@ -704,8 +704,8 @@ ipcMain.handle('db:get-dashboard-stats', async (_event, timeFilter: string) => {
     const previousBookings = prevPeriodRows[0].count || 1;
     const bookingsChange = Math.round(((totalBookings - previousBookings) / previousBookings) * 100);
     
-    // Mock percentage changes (you can calculate these properly later)
-    const occupancyChange = Math.floor(Math.random() * 10) - 2; // Random between -2 and 7
+    
+    const occupancyChange = Math.floor(Math.random() * 10) - 2; 
     const checkInsChange = Math.floor(Math.random() * 10) - 2;
     const checkOutsChange = Math.floor(Math.random() * 10) - 5;
     
@@ -730,7 +730,7 @@ ipcMain.handle('db:get-dashboard-stats', async (_event, timeFilter: string) => {
   }
 });
 
-// Window control handlers
+
 ipcMain.handle('window:minimize', () => {
   if (mainWindow) mainWindow.minimize();
 });

@@ -18,7 +18,7 @@ export default function RoomManagementModal({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Add form state
+  
   const [startRoomNumber, setStartRoomNumber] = useState('');
   const [roomCount, setRoomCount] = useState(1);
   const [floorNumber, setFloorNumber] = useState(1);
@@ -26,7 +26,7 @@ export default function RoomManagementModal({
   const [pricePerNight, setPricePerNight] = useState('500');
   const [maxGuests, setMaxGuests] = useState(2);
 
-  // Remove form state
+  
   const [selectedRooms, setSelectedRooms] = useState<number[]>([]);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function RoomManagementModal({
     setLoading(true);
 
     try {
-      // Validation
+      
       if (!startRoomNumber || roomCount < 1) {
         throw new Error('Lütfen geçerli oda bilgileri girin');
       }
@@ -75,7 +75,7 @@ export default function RoomManagementModal({
         throw new Error('Oda numarası sayı olmalıdır');
       }
 
-      // Create array of rooms to add
+      
       const roomsToAdd = [];
       for (let i = 0; i < roomCount; i++) {
         const roomNumber = (startNum + i).toString();
@@ -88,7 +88,7 @@ export default function RoomManagementModal({
         });
       }
 
-      // Call API to add rooms
+      
       const result = await window.electronAPI.addRooms(roomsToAdd);
 
       if (result.success) {
@@ -96,7 +96,7 @@ export default function RoomManagementModal({
         await loadRooms();
         if (onRoomsUpdated) onRoomsUpdated();
         
-        // Reset form after 2 seconds
+        
         setTimeout(() => {
           setStartRoomNumber((startNum + roomCount).toString());
           setSuccess('');
@@ -165,7 +165,7 @@ export default function RoomManagementModal({
 
   if (!isOpen) return null;
 
-  // Group rooms by floor for remove tab
+  
   const roomsByFloor = rooms.reduce((acc, room) => {
     const floor = room.FloorNumber;
     if (!acc[floor]) acc[floor] = [];
@@ -176,7 +176,7 @@ export default function RoomManagementModal({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
       <div className="bg-sidebar-dark rounded-xl border border-border-color w-full max-w-4xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
+        {}
         <div className="flex items-center justify-between p-6 border-b border-border-color">
           <h2 className="text-text-primary text-2xl font-bold">Oda Yönetimi</h2>
           <button
@@ -187,7 +187,7 @@ export default function RoomManagementModal({
           </button>
         </div>
 
-        {/* Tabs */}
+        {}
         <div className="flex border-b border-border-color">
           <button
             onClick={() => setActiveTab('add')}
@@ -217,9 +217,9 @@ export default function RoomManagementModal({
           </button>
         </div>
 
-        {/* Content */}
+        {}
         <div className="p-6">
-          {/* Error/Success Messages */}
+          {}
           {error && (
             <div className="mb-4 bg-red-900/20 border border-red-500 rounded-lg p-4">
               <p className="text-red-300 text-sm">{error}</p>
@@ -231,7 +231,7 @@ export default function RoomManagementModal({
             </div>
           )}
 
-          {/* Add Rooms Tab */}
+          {}
           {activeTab === 'add' && (
             <form onSubmit={handleAddRooms} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -333,7 +333,7 @@ export default function RoomManagementModal({
                 </div>
               </div>
 
-              {/* Preview */}
+              {}
               {startRoomNumber && roomCount > 0 && (
                 <div className="bg-card-dark rounded-lg p-4 border border-border-color">
                   <p className="text-text-secondary text-sm mb-2">Önizleme:</p>
@@ -371,7 +371,7 @@ export default function RoomManagementModal({
             </form>
           )}
 
-          {/* Remove Rooms Tab */}
+          {}
           {activeTab === 'remove' && (
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -451,4 +451,3 @@ export default function RoomManagementModal({
     </div>
   );
 }
-

@@ -7,10 +7,10 @@ export async function downloadCSV(type: 'guests' | 'reservations' | 'rooms') {
       return;
     }
 
-    // Convert data to CSV
+    
     const csvContent = convertToCSV(result.data);
     
-    // Create blob and download
+    
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
@@ -33,31 +33,31 @@ export async function downloadCSV(type: 'guests' | 'reservations' | 'rooms') {
 function convertToCSV(data: any[]): string {
   if (data.length === 0) return '';
   
-  // Get headers from first object
+  
   const headers = Object.keys(data[0]);
   
-  // Create CSV header row
+  
   const headerRow = headers.map(h => `"${h}"`).join(',');
   
-  // Create data rows
+  
   const dataRows = data.map(row => {
     return headers.map(header => {
       const value = row[header];
       
-      // Handle null/undefined
+      
       if (value === null || value === undefined) return '""';
       
-      // Handle dates
+      
       if (value instanceof Date) {
         return `"${value.toISOString()}"`;
       }
       
-      // Handle strings with special characters
+      
       if (typeof value === 'string') {
         return `"${value.replace(/"/g, '""')}"`;
       }
       
-      // Handle numbers
+      
       return `"${value}"`;
     }).join(',');
   });
@@ -66,14 +66,14 @@ function convertToCSV(data: any[]): string {
 }
 
 export function printInvoice(reservation: any, guest: any, room: any) {
-  // Calculate totals
+  
   const checkIn = new Date(reservation.CheckInDate);
   const checkOut = new Date(reservation.CheckOutDate);
   const nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
   const pricePerNight = Number(room.PricePerNight || 0);
   const total = nights * pricePerNight;
 
-  // Create print window
+  
   const printWindow = window.open('', '_blank');
   if (!printWindow) {
     alert('Faturaları yazdırmak için popup\'lara izin verin');
@@ -294,4 +294,3 @@ export function printInvoice(reservation: any, guest: any, room: any) {
   printWindow.document.write(invoiceHTML);
   printWindow.document.close();
 }
-

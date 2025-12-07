@@ -54,7 +54,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
     setIsDetailModalOpen(true);
   };
 
-  // Filter guests by search term
+  
   const filteredGuests = guests.filter(guest => 
     guest.FullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     guest.PhoneNumber.includes(searchTerm) ||
@@ -99,7 +99,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
 
   return (
     <div className="flex-1 p-8 overflow-y-auto">
-      {/* Header */}
+      {}
       <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
         <div className="flex flex-col gap-2">
           <h1 className="text-text-primary text-4xl font-black tracking-tight">Misafirler</h1>
@@ -119,7 +119,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-sidebar-dark p-4 rounded-lg border border-border-color">
           <div className="flex items-center gap-3">
@@ -162,7 +162,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
         </div>
       </div>
 
-      {/* Search Bar */}
+      {}
       <div className="mb-6">
         <div className="relative">
           <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary">
@@ -179,7 +179,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
         </div>
       </div>
 
-      {/* Guests Table */}
+      {}
       <div className="bg-sidebar-dark rounded-lg border border-border-color overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -253,7 +253,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
         </div>
       </div>
 
-      {/* Guest Details Modal */}
+      {}
       {isDetailModalOpen && selectedGuest && (
         <GuestDetailsModal
           guest={selectedGuest}
@@ -269,7 +269,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
   );
 }
 
-// Guest Details Modal Component
+
 interface GuestDetailsModalProps {
   guest: GuestWithStats;
   isOpen: boolean;
@@ -340,7 +340,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
           className="bg-sidebar-dark rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-border-color"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
+          {}
           <div className="p-6 border-b border-border-color">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-4">
@@ -386,9 +386,9 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
             )}
           </div>
 
-          {/* Content */}
+          {}
           <div className="p-6 space-y-6">
-            {/* Guest Information */}
+            {}
             <div className="bg-card-dark p-6 rounded-lg">
                         <h3 className="text-text-primary text-lg font-bold mb-4">İletişim Bilgileri</h3>
               
@@ -442,7 +442,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
               )}
             </div>
 
-            {/* Statistics */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-card-dark p-4 rounded-lg text-center">
                 <p className="text-text-secondary text-sm mb-1">Toplam Konaklama</p>
@@ -460,7 +460,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
               </div>
             </div>
 
-            {/* Reservation History */}
+            {}
             <div>
               <h3 className="text-text-primary text-lg font-bold mb-4">Rezervasyon Geçmişi</h3>
               
@@ -512,4 +512,3 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
     </>
   );
 }
-

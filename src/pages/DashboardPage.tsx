@@ -49,7 +49,7 @@ export default function DashboardPage() {
       setStats(data);
     } catch (error) {
       console.error('Failed to load dashboard stats:', error);
-      // Set dummy data so page doesn't hang
+      
       setStats({
         occupancyRate: 0,
         occupancyChange: 0,
@@ -125,16 +125,16 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-1 gap-6 p-6 md:p-8">
-      {/* Main Content */}
+      {}
       <div className="flex-[0.6] flex flex-col gap-8 min-w-0">
-        {/* Header */}
+        {}
         <header className="flex flex-wrap justify-between gap-4 items-center">
           <h2 className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">
             Otel Performans Paneli
           </h2>
         </header>
 
-        {/* Stats Cards */}
+        {}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="flex flex-col gap-2 rounded-lg p-6 border border-[#324d67]">
           <div className="flex items-center gap-2">
@@ -176,7 +176,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* Booking Trends Chart */}
+      {}
       <section className="flex flex-col gap-6 rounded-lg border border-[#324d67] p-6">
         <div className="flex flex-wrap justify-between items-center gap-4">
           <div className="flex flex-col">
@@ -194,7 +194,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Filter Buttons */}
+          {}
           <div className="flex items-center bg-[#233648] rounded-lg p-1">
             <button
               onClick={() => setTimeFilter('today')}
@@ -223,7 +223,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Chart */}
+        {}
         <div className="relative h-[350px] w-full">
           <BookingChart data={stats.bookingTrends} />
         </div>
@@ -231,9 +231,9 @@ export default function DashboardPage() {
 
       </div>
 
-      {/* Right Sidebar - Upcoming Events */}
+      {}
       <aside className="flex-[0.4] flex flex-col gap-8 min-w-0">
-        {/* Header */}
+        {}
         <header className="flex flex-wrap justify-between gap-4 items-center">
           <h2 className="text-white text-4xl font-black leading-tight tracking-[-0.033em]">
             Yaklaşan Etkinlikler
@@ -247,7 +247,7 @@ export default function DashboardPage() {
           </button>
         </header>
 
-        {/* Events List */}
+        {}
         <section className="flex flex-col gap-6 rounded-lg border border-[#324d67] p-6 flex-1 overflow-y-auto">
           <div className="flex flex-col gap-4">
             {events.length === 0 ? (
@@ -282,7 +282,7 @@ export default function DashboardPage() {
         </section>
       </aside>
 
-      {/* Event Modal */}
+      {}
       {showEventModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setShowEventModal(false)}>
           <div className="bg-[#192633] rounded-lg p-6 max-w-md w-full mx-4" onClick={(e) => e.stopPropagation()}>
@@ -375,7 +375,7 @@ export default function DashboardPage() {
   );
 }
 
-// Simple line chart component
+
 function BookingChart({ data }: { data: { date: string; count: number }[] }) {
   if (data.length === 0) {
     return (
@@ -418,4 +418,3 @@ function BookingChart({ data }: { data: { date: string; count: number }[] }) {
     </>
   );
 }
-

@@ -17,7 +17,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   
-  // Check if current user is a Manager (handles encoding issues)
+  
   const isManager = isManagerRole(currentManager.Role);
 
   const loadManagers = async () => {
@@ -102,10 +102,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
     <div className="flex flex-col min-h-screen bg-background-dark font-display">
       <TitleBar title="Otel Rezervasyon Sistemi - Ayarlar" />
       <div className="flex flex-1">
-      {/* Sidebar */}
+      {}
       <aside className="w-64 bg-sidebar-dark p-4 flex flex-col justify-between">
         <div>
-          {/* Logo and Admin Info */}
+          {}
           <div className="flex items-center gap-3 mb-8">
             <div className="flex items-center justify-center bg-primary rounded-full size-10">
               <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
@@ -116,9 +116,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
             </div>
           </div>
 
-          {/* Navigation Menu */}
+          {}
           <nav className="flex flex-col gap-2">
-            {/* Only show Dashboard for Yönetici (Manager) */}
+            {}
             {isManager && (
               <button 
                 onClick={() => onNavigate('dashboard')}
@@ -147,7 +147,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
           </nav>
         </div>
 
-        {/* Bottom Actions */}
+        {}
         <div className="flex flex-col gap-4">
           <button 
             onClick={() => onNavigate('settings')}
@@ -169,9 +169,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
         </div>
       </aside>
 
-      {/* Main Content */}
+      {}
       <main className="flex-1 p-8">
-        {/* Header */}
+        {}
         <div className="mb-8">
           <h1 className="text-text-primary text-4xl font-black tracking-tight mb-2">Ayarlar</h1>
           <p className="text-text-secondary text-base">
@@ -179,7 +179,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
           </p>
         </div>
 
-        {/* Alerts */}
+        {}
         {success && (
           <div className="mb-6 flex items-center gap-2 p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
             <span className="material-symbols-outlined text-green-500">check_circle</span>
@@ -194,9 +194,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
           </div>
         )}
 
-        {/* Content: Show different view for Manager vs Staff */}
+        {}
         {isManager ? (
-          /* Manager View - Full Access */
+          
           <div className="bg-card-dark border border-border-color rounded-2xl p-6 mb-6">
             <div className="flex justify-between items-center mb-6">
               <div>
@@ -212,7 +212,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
               </button>
             </div>
 
-            {/* Managers List */}
+            {}
             {loading ? (
               <div className="text-center py-12">
                 <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
@@ -270,7 +270,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
             )}
           </div>
         ) : (
-          /* Staff View - View Only */
+          
           <div className="bg-card-dark border border-border-color rounded-2xl p-6 mb-6">
             <h2 className="text-text-primary text-2xl font-bold mb-6">Hesap Bilgilerim</h2>
             <div className="space-y-6">
@@ -324,7 +324,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
           </div>
         )}
 
-        {/* System Info */}
+        {}
         <div className="bg-card-dark border border-border-color rounded-2xl p-6">
           <h2 className="text-text-primary text-2xl font-bold mb-4">Sistem Bilgileri</h2>
           <div className="grid grid-cols-2 gap-4">
@@ -348,7 +348,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
         </div>
       </main>
 
-      {/* Add Manager Modal */}
+      {}
       {isAddModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50" onClick={() => setIsAddModalOpen(false)}>
           <div className="bg-card-dark border border-border-color rounded-2xl p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
@@ -442,4 +442,3 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
 };
 
 export default SettingsPage;
-

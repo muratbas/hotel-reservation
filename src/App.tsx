@@ -1,39 +1,7 @@
-/**
- * ========================================
- * OTEL REZERVASYON YÖNETİM SİSTEMİ - ANA UYGULAMA
- * ========================================
- * 
- * Bu dosya uygulamanın ana bileşenidir (App.tsx)
- * 
- * BAŞLICA ÖZELLİKLER:
- * - Kullanıcı girişi ve kimlik doğrulama
- * - Oda yönetimi (ekleme, silme, durum kontrolü)
- * - Rezervasyon oluşturma ve güncelleme
- * - Kat planı görselleştirme
- * - Filtreleme (durum ve oda tipi)
- * - Sayfalama sistemi
- * - CSV dışa aktarma
- * 
- * TEKNOLOJİLER:
- * - React (kullanıcı arayüzü)
- * - TypeScript (tip güvenliği)
- * - Tailwind CSS (stil)
- * - Electron (masaüstü uygulama)
- * - MySQL (veritabanı)
- * 
- * YAPISI:
- * 1. State Yönetimi - Uygulama durumları
- * 2. Fonksiyonlar - İşlevler ve event handler'lar
- * 3. Yaşam Döngüsü - useEffect hook'ları
- * 4. Veri İşleme - Filtreleme ve sayfalama
- * 5. Render Mantığı - Sayfa görüntüleme
- */
-
-// React kütüphanesinden state ve yaşam döngüsü hook'larını içe aktarıyoruz
 import { useState, useEffect } from 'react';
-// Veritabanı tiplerimizi içe aktarıyoruz (Room ve Manager)
+
 import type { Room, Manager } from './types/database';
-// Modallar (açılır pencereler) ve sayfaları içe aktarıyoruz
+
 import RoomDetailsModal from './components/RoomDetailsModal';
 import NewReservationModal from './components/NewReservationModal';
 import RoomManagementModal from './components/RoomManagementModal';
@@ -46,157 +14,156 @@ import { downloadCSV } from './utils/csvExport';
 import { isManagerRole } from './utils/roleHelper';
 import { fixTurkishEncoding } from './utils/textHelper';
 
-// Ana uygulama komponenti - tüm uygulamayı yöneten merkezi bileşen
 function App() {
   
-  // ========== STATE YÖNETİMİ (Uygulama Durumları) ==========
   
-  // Kimlik doğrulama durumu - şu an giriş yapmış yönetici bilgisi
+  
+  
   const [currentManager, setCurrentManager] = useState<Manager | null>(null);
-  // Kimlik doğrulama yüklenme durumu - giriş kontrolü yapılırken true
+  
   const [authLoading, setAuthLoading] = useState(true);
   
-  // Hangi sayfada olduğumuzu tutan değişken (rooms = odalar sayfası başlangıç)
+  
   const [currentView, setCurrentView] = useState<'dashboard' | 'rooms' | 'guests' | 'settings'>('rooms');
-  // Tüm odaların listesini tutan dizi
+  
   const [rooms, setRooms] = useState<Room[]>([]);
-  // Veriler yüklenirken gösterilen yükleme durumu
+  
   const [loading, setLoading] = useState(true);
-  // Veritabanı bağlantı durumu - bağlıysa true
+  
   const [connected, setConnected] = useState(false);
-  // Hata mesajlarını göstermek için kullanılan değişken
+  
   const [errorMessage, setErrorMessage] = useState('');
-  // Oda durumu filtresi (Available/Occupied/Maintenance/All)
+  
   const [statusFilter, setStatusFilter] = useState<string>('All');
-  // Oda tipi filtresi (Standard/Deluxe/Suite/All)
+  
   const [typeFilter, setTypeFilter] = useState<string>('All');
-  // Üzerine tıklanan oda bilgisini tutan değişken
+  
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
-  // Oda detay modalının açık/kapalı durumu
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Yeni rezervasyon modalının açık/kapalı durumu
+  
   const [isNewReservationModalOpen, setIsNewReservationModalOpen] = useState(false);
-  // Oda yönetim modalının açık/kapalı durumu
+  
   const [isRoomManagementModalOpen, setIsRoomManagementModalOpen] = useState(false);
-  // Sayfalama için mevcut sayfa numarası
+  
   const [currentPage, setCurrentPage] = useState(1);
-  // Her sayfada gösterilecek oda sayısı (4 oda x 3 kat = 12 oda)
+  
   const roomsPerPage = 12;
 
-  // ========== FONKSİYONLAR (İşlevler) ==========
   
-  // Bir odaya tıklandığında çalışır - oda detay penceresini açar
+  
+  
   const handleRoomClick = (room: Room) => {
-    setSelectedRoom(room);  // Tıklanan odayı seç
-    setIsModalOpen(true);   // Modal penceresini aç
+    setSelectedRoom(room);  
+    setIsModalOpen(true);   
   };
 
-  // Modal penceresini kapatma fonksiyonu
+  
   const handleCloseModal = () => {
-    setIsModalOpen(false);  // Önce modalı kapat
-    setTimeout(() => setSelectedRoom(null), 300); // Animasyon için 300ms bekle, sonra seçili odayı temizlee
+    setIsModalOpen(false);  
+    setTimeout(() => setSelectedRoom(null), 300); 
   };
 
-  // Sayfa değiştirme fonksiyonu (sayfalama için)
+  
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);  // Yeni sayfa numarasını kaydet
-    window.scrollTo({ top: 0, behavior: 'smooth' });  // Sayfanın en üstüne kaydır
+    setCurrentPage(page);  
+    window.scrollTo({ top: 0, behavior: 'smooth' });  
   };
 
-  // Yeni rezervasyon oluşturulduğunda çalışır - odaları yeniden yükler
+  
   const handleReservationCreated = () => {
-    loadRooms();  // Odaları tekrar yükle (güncel durumları görmek için)
+    loadRooms();  
   };
 
-  // Veritabanından tüm odaları yükleyen fonksiyon
+  
   const loadRooms = async () => {
     try {
-      // Electron API üzerinden odaları getir
+      
       const roomsData = await window.electronAPI.getRooms();
-      setRooms(roomsData);  // Odaları state'e kaydet
+      setRooms(roomsData);  
     } catch (error: any) {
       console.error('Failed to load rooms:', error);
     }
   };
 
-  // ========== YAŞAM DÖNGÜSÜ HOOK'LARI (useEffect) ==========
   
-  // Uygulama ilk açıldığında (mount) çalışır - oturum kontrolü yapar
+  
+  
   useEffect(() => {
     const checkSession = async () => {
-      // LocalStorage'dan önceki oturum bilgisini al
+      
       const managerId = localStorage.getItem('managerId');
       if (managerId) {
         try {
-          // Yönetici bilgilerini veritabanından kontrol et
+          
           const result = await window.electronAPI.getCurrentManager(parseInt(managerId));
           if (result.success && result.manager) {
-            setCurrentManager(result.manager);  // Oturum geçerli, giriş yap
+            setCurrentManager(result.manager);  
           } else {
-            localStorage.removeItem('managerId');  // Geçersiz oturum, temizle
+            localStorage.removeItem('managerId');  
           }
         } catch (error) {
           console.error('Failed to restore session:', error);
           localStorage.removeItem('managerId');
         }
       }
-      setAuthLoading(false);  // Kontrol tamamlandı
+      setAuthLoading(false);  
     };
     checkSession();
-  }, []);  // Boş dizi = sadece ilk açılışta çalış
+  }, []);  
 
-  // Yönetici giriş yaptığında çalışır - veritabanı bağlantısını test eder ve odaları yükler
+  
   useEffect(() => {
-    // Sadece giriş yapılmışsa çalış
+    
     if (!currentManager) return;
     
-    // Veritabanı bağlantısını test et ve odaları yükle
+    
     const init = async () => {
       try {
-        // Veritabanı bağlantısını test et
+        
         const result = await window.electronAPI.testConnection();
         setConnected(result.success);
         
         if (result.success) {
-          // Bağlantı başarılı, odaları yükle
+          
           const roomsData = await window.electronAPI.getRooms();
           setRooms(roomsData);
         } else {
-          // Bağlantı başarısız, hata mesajını göster
+          
           setErrorMessage(result.message || 'Unknown error');
         }
       } catch (error: any) {
         console.error('Failed to connect:', error);
         setErrorMessage(error.message || 'Connection failed');
       } finally {
-        setLoading(false);  // Yükleme tamamlandı
+        setLoading(false);  
       }
     };
 
     init();
-  }, [currentManager]);  // currentManager değiştiğinde tekrar çalış
+  }, [currentManager]);  
 
-  // Filtre değiştiğinde sayfa numarasını 1'e sıfırla
+  
   useEffect(() => {
     setCurrentPage(1);
-  }, [statusFilter, typeFilter]);  // statusFilter veya typeFilter değişince çalış
+  }, [statusFilter, typeFilter]);  
 
-  // Giriş yapma fonksiyonu - LoginPage tarafından çağrılır
-  const handleLogin = (manager: Manager) => {
-    setCurrentManager(manager);  // Yönetici bilgisini kaydet
-  };
-
-  // Çıkış yapma fonksiyonu
-  const handleLogout = () => {
-    localStorage.removeItem('managerId');  // Oturum bilgisini sil
-    setCurrentManager(null);  // Yönetici bilgisini temizle
-    setRooms([]);  // Odaları temizle
-    setCurrentView('rooms');  // Odalar sayfasına dön
-  };
-
-  // ========== RENDER MANTIĞI (Ekran Görüntüleme) ==========
   
-  // Kimlik doğrulama kontrolü yapılırken dönen animasyon göster
+  const handleLogin = (manager: Manager) => {
+    setCurrentManager(manager);  
+  };
+
+  
+  const handleLogout = () => {
+    localStorage.removeItem('managerId');  
+    setCurrentManager(null);  
+    setRooms([]);  
+    setCurrentView('rooms');  
+  };
+
+  
+  
+  
   if (authLoading) {
     return (
       <div className="flex items-center justify-center h-screen bg-background-dark">
@@ -208,49 +175,49 @@ function App() {
     );
   }
 
-  // Giriş yapılmamışsa login sayfasını göster
+  
   if (!currentManager) {
     return <LoginPage onLogin={handleLogin} />;
   }
 
-  // ========== VERİ İŞLEME (Filtreleme ve Sayfalama) ==========
   
-  // Odaları duruma ve tipe göre filtrele
+  
+  
   const filteredRooms = rooms.filter(room => {
     const matchesStatus = statusFilter === 'All' || room.Status === statusFilter;
     const matchesType = typeFilter === 'All' || room.Type === typeFilter;
-    return matchesStatus && matchesType;  // Her iki koşul da sağlanmalı
+    return matchesStatus && matchesType;  
   });
 
-  // Sayfalama hesaplamaları
-  const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);  // Toplam sayfa sayısı
-  const startIndex = (currentPage - 1) * roomsPerPage;  // Başlangıç indeksi
-  const endIndex = startIndex + roomsPerPage;  // Bitiş indeksi
-  const paginatedRooms = filteredRooms.slice(startIndex, endIndex);  // Mevcut sayfadaki odalar
+  
+  const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);  
+  const startIndex = (currentPage - 1) * roomsPerPage;  
+  const endIndex = startIndex + roomsPerPage;  
+  const paginatedRooms = filteredRooms.slice(startIndex, endIndex);  
 
-  // Odaları kata göre grupla (ör: {1: [oda101, oda102], 2: [oda201, oda202]})
+  
   const roomsByFloor = paginatedRooms.reduce((acc, room) => {
     const floor = room.FloorNumber;
-    if (!acc[floor]) acc[floor] = [];  // Eğer bu kat yoksa oluştur
-    acc[floor].push(room);  // Odayı ilgili kata ekle
+    if (!acc[floor]) acc[floor] = [];  
+    acc[floor].push(room);  
     return acc;
   }, {} as Record<number, Room[]>);
 
-  // Her durumdaki oda sayısını hesapla (filtre butonlarında göstermek için)
+  
   const statusCounts = {
     Available: rooms.filter(r => r.Status === 'Available').length,
     Occupied: rooms.filter(r => r.Status === 'Occupied').length,
     Maintenance: rooms.filter(r => r.Status === 'Maintenance').length,
   };
 
-  // Her tipteki oda sayısını hesapla (filtre butonlarında göstermek için)
+  
   const typeCounts = {
     Standard: rooms.filter(r => r.Type === 'Standard').length,
     Deluxe: rooms.filter(r => r.Type === 'Deluxe').length,
     Suite: rooms.filter(r => r.Type === 'Suite').length,
   };
 
-  // Veriler yüklenirken göster
+  
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background-dark">
@@ -259,23 +226,23 @@ function App() {
     );
   }
 
-  // ========== SAYFA RENDERING (Hangi sayfa gösterilecek?) ==========
   
-  // Ayarlar sayfasındaysak onu göster
+  
+  
   if (currentView === 'settings') {
     return <SettingsPage currentManager={currentManager} onNavigate={setCurrentView} />;
   }
 
-  // Dashboard sayfasındaysak onu göster (OKUL PROJESİ İÇİN GİZLENDİ)
+  
   if (currentView === 'dashboard') {
     return (
       <div className="flex flex-col min-h-screen bg-background-dark font-display">
         <TitleBar title="Otel Rezervasyon Sistemi - Panel" />
         <div className="flex flex-1">
-        {/* Sidebar */}
+        {}
         <aside className="w-64 bg-sidebar-dark p-4 flex flex-col justify-between">
           <div>
-            {/* Logo and Admin Info */}
+            {}
             <div className="flex items-center gap-3 mb-8">
               <div className="flex items-center justify-center bg-primary rounded-full size-10">
                 <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
@@ -286,9 +253,9 @@ function App() {
               </div>
             </div>
 
-            {/* Navigation Menu */}
+            {}
             <nav className="flex flex-col gap-2">
-              {/* Only show Dashboard for Yönetici (Manager) */}
+              {}
               {isManagerRole(currentManager.Role) && (
                 <button 
                   onClick={() => setCurrentView('dashboard')}
@@ -317,7 +284,7 @@ function App() {
             </nav>
           </div>
 
-          {/* Bottom Actions */}
+          {}
           <div className="flex flex-col gap-4">
             <button 
               onClick={() => setCurrentView('settings')}
@@ -336,23 +303,23 @@ function App() {
           </div>
         </aside>
 
-        {/* Dashboard Content */}
+        {}
         <DashboardPage />
         </div>
       </div>
     );
   }
 
-  // Misafirler sayfasındaysak onu göster (OKUL PROJESİ İÇİN GİZLENDİ)
+  
   if (currentView === 'guests') {
     return (
       <div className="flex flex-col min-h-screen bg-background-dark font-display">
         <TitleBar title="Otel Rezervasyon Sistemi - Misafirler" />
         <div className="flex flex-1">
-        {/* Yan Menü (Sidebar) */}
+        {}
         <aside className="w-64 bg-sidebar-dark p-4 flex flex-col justify-between">
           <div>
-            {/* Logo ve Yönetici Bilgileri */}
+            {}
             <div className="flex items-center gap-3 mb-8">
               <div className="flex items-center justify-center bg-primary rounded-full size-10">
                 <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
@@ -363,9 +330,9 @@ function App() {
               </div>
             </div>
 
-            {/* Navigation Menu */}
+            {}
             <nav className="flex flex-col gap-2">
-              {/* Only show Dashboard for Yönetici (Manager) */}
+              {}
               {isManagerRole(currentManager.Role) && (
                 <button 
                   onClick={() => setCurrentView('dashboard')}
@@ -394,7 +361,7 @@ function App() {
             </nav>
           </div>
 
-          {/* Bottom Actions */}
+          {}
           <div className="flex flex-col gap-4">
             <button 
               onClick={() => setCurrentView('settings')}
@@ -419,16 +386,16 @@ function App() {
     );
   }
 
-  // ========== ANA ODALAR SAYFASI (Floor Plan - Kat Planı) ==========
-  // Bu bölüm otel odalarını kat kat gösterir ve yönetir
+  
+  
   return (
     <div className="flex flex-col min-h-screen bg-background-dark font-display">
       <TitleBar title="Otel Rezervasyon Sistemi - Odalar" />
       <div className="flex flex-1">
-      {/* Yan Menü (Sidebar) - Sol tarafta sabit duran navigasyon menüsü */}
+      {}
       <aside className="w-64 bg-sidebar-dark p-4 flex flex-col justify-between">
       <div>
-          {/* Logo ve Yönetici Bilgileri - Üst kısımda yönetici ismi ve emaili */}
+          {}
           <div className="flex items-center gap-3 mb-8">
             <div className="flex items-center justify-center bg-primary rounded-full size-10">
               <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
@@ -439,9 +406,9 @@ function App() {
             </div>
           </div>
 
-          {/* Navigation Menu */}
+          {}
           <nav className="flex flex-col gap-2">
-            {/* Only show Dashboard for Yönetici (Manager) */}
+            {}
             {isManagerRole(currentManager.Role) && (
               <button 
                 onClick={() => setCurrentView('dashboard')}
@@ -470,7 +437,7 @@ function App() {
           </nav>
         </div>
 
-        {/* Bottom Actions */}
+        {}
         <div className="flex flex-col gap-4">
           <button 
             onClick={() => setCurrentView('settings')}
@@ -489,16 +456,16 @@ function App() {
         </div>
       </aside>
 
-      {/* Ana İçerik Alanı - Sağ tarafta odaları ve filtreleri gösterir */}
+      {}
       <main className="flex-1 p-8">
-        {/* Başlık ve Oda Yönetim Butonu */}
+        {}
         <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
           <div className="flex flex-col gap-2">
             <h1 className="text-text-primary text-4xl font-black tracking-tight">Kat Planı</h1>
             <p className="text-text-secondary text-base">Oda durumlarını ve müsaitliği görselleştirin.</p>
           </div>
 
-          {/* Oda Ekleme/Çıkarma Butonu */}
+          {}
           <button 
             onClick={() => setIsRoomManagementModalOpen(true)}
             className="flex cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-text-primary text-sm font-bold hover:bg-primary/80 transition-colors"
@@ -509,9 +476,9 @@ function App() {
           </button>
         </div>
 
-        {/* Aksiyon Butonları Satırı - Rezervasyon oluşturma ve dışa aktarma */}
+        {}
         <div className="flex gap-3 mb-6 flex-wrap">
-          {/* Yeni Rezervasyon Oluştur */}
+          {}
           <button 
             onClick={() => setIsNewReservationModalOpen(true)}
             className="flex cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-green-600 hover:bg-green-700 text-text-primary text-sm font-bold transition-colors"
@@ -519,7 +486,7 @@ function App() {
             <span className="material-symbols-outlined text-base">add_circle</span>
             <span className="truncate">Yeni Rezervasyon</span>
           </button>
-          {/* Odaları CSV olarak İndir */}
+          {}
           <button 
             onClick={() => downloadCSV('rooms')}
             className="flex cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-blue-600 hover:bg-blue-700 text-text-primary text-sm font-bold transition-colors"
@@ -527,7 +494,7 @@ function App() {
             <span className="material-symbols-outlined text-base">download</span>
             <span className="truncate">Odaları Dışa Aktar</span>
           </button>
-          {/* Rezervasyonları CSV olarak İndir */}
+          {}
           <button 
             onClick={() => downloadCSV('reservations')}
             className="flex cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-purple-600 hover:bg-purple-700 text-text-primary text-sm font-bold transition-colors"
@@ -537,7 +504,7 @@ function App() {
           </button>
         </div>
 
-        {/* Durum Filtreleri - Odaları durumlarına göre filtrele (Müsait/Dolu/Bakımda) */}
+        {}
         <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
           <button 
             onClick={() => setStatusFilter('All')}
@@ -579,7 +546,7 @@ function App() {
           </button>
         </div>
 
-        {/* Oda Tipi Filtreleri - Odaları tiplerine göre filtrele (Standard/Deluxe/Suite) */}
+        {}
         <div className="flex gap-3 mb-6 overflow-x-auto pb-2">
           <button 
             onClick={() => setTypeFilter('All')}
@@ -621,9 +588,9 @@ function App() {
           </button>
         </div>
 
-        {/* Oda Tablosu - Odaları kat kat gösteren ana grid yapısı */}
+        {}
         <div className="bg-sidebar-dark p-8 rounded-lg border border-border-color">
-          {/* Veritabanı bağlı değilse hata mesajı göster */}
+          {}
           {!connected ? (
             <div className="text-center py-12">
               <p className="text-red-400 text-lg mb-2">❌ Veritabanı bağlı değil</p>
@@ -635,39 +602,39 @@ function App() {
               )}
             </div>
           ) : filteredRooms.length === 0 ? (
-            // Filtre sonucu oda bulunamadıysa mesaj göster
+            
             <div className="text-center py-12">
               <p className="text-text-secondary text-lg">Bu filtre için oda bulunamadı</p>
               <p className="text-text-secondary text-sm mt-2">Farklı bir durum seçmeyi deneyin</p>
             </div>
           ) : (
-            // Odalar var, kat kat göster
+            
             <div className="space-y-8">
-              {/* Her kat için döngü (1. kat, 2. kat, 3. kat...) */}
+              {}
               {Object.keys(roomsByFloor).sort((a, b) => Number(a) - Number(b)).map(floorNum => (
                 <div key={floorNum}>
-                  {/* Kat Başlığı */}
+                  {}
                   <h3 className="text-text-primary font-bold text-lg mb-4">
                     Kat {floorNum}
                   </h3>
                   
-                  {/* Bu kattaki odaların grid'i - 4 sütun halinde göster */}
+                  {}
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                    {/* Bu kattaki her oda için kart oluştur */}
+                    {}
                     {roomsByFloor[Number(floorNum)].map((room) => {
-                // Oda durumuna göre renk belirle (Müsait=yeşil, Dolu=sarı, Bakım=kırmızı)
+                
                 const statusColor = 
                   room.Status === 'Available' ? 'bg-green-800/20 border-green-500' :
                   room.Status === 'Occupied' ? 'bg-yellow-800/20 border-yellow-500' :
                   'bg-red-800/20 border-red-500';
                 
-                // Durum noktası rengi
+                
                 const dotColor =
                   room.Status === 'Available' ? 'bg-status-available' :
                   room.Status === 'Occupied' ? 'bg-status-occupied' :
                   'bg-status-maintenance';
 
-                // Durum yazısı rengi
+                
                 const textColor =
                   room.Status === 'Available' ? 'text-green-300' :
                   room.Status === 'Occupied' ? 'text-yellow-300' :
@@ -696,7 +663,7 @@ function App() {
           )}
       </div>
 
-        {/* Pagination */}
+        {}
         {totalPages > 1 && (
           <div className="flex justify-center items-center mt-6 gap-4">
             <p className="text-text-secondary text-sm">
@@ -712,7 +679,7 @@ function App() {
               </button>
               
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => {
-                // Show first page, last page, current page, and pages around current
+                
                 const showPage = page === 1 || 
                                 page === totalPages || 
                                 (page >= currentPage - 1 && page <= currentPage + 1);
@@ -753,9 +720,9 @@ function App() {
         )}
       </main>
 
-      {/* ========== MODALLAR (Açılır Pencereler) ========== */}
+      {}
       
-      {/* Oda Detay Modalı - Bir odaya tıklandığında açılır, oda bilgilerini ve rezervasyon detaylarını gösterir */}
+      {}
       <RoomDetailsModal 
         room={selectedRoom}
         isOpen={isModalOpen}
@@ -763,14 +730,14 @@ function App() {
         onReservationUpdated={handleReservationCreated}
       />
 
-      {/* Yeni Rezervasyon Modalı - Yeni rezervasyon oluşturmak için form içerir */}
+      {}
       <NewReservationModal
         isOpen={isNewReservationModalOpen}
         onClose={() => setIsNewReservationModalOpen(false)}
         onReservationCreated={handleReservationCreated}
       />
 
-      {/* Oda Yönetim Modalı - Oda ekleme veya silme işlemleri için */}
+      {}
       <RoomManagementModal
         isOpen={isRoomManagementModalOpen}
         onClose={() => setIsRoomManagementModalOpen(false)}

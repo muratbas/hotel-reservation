@@ -14,7 +14,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   
-  // Edit form state
+  
   const [editCheckInDate, setEditCheckInDate] = useState('');
   const [editCheckOutDate, setEditCheckOutDate] = useState('');
   const [editNumberOfGuests, setEditNumberOfGuests] = useState(1);
@@ -38,7 +38,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
       const res = await window.electronAPI.getRoomReservation(room.RoomId);
       setReservation(res);
       
-      // Populate edit form
+      
       if (res) {
         setEditCheckInDate(new Date(res.CheckInDate).toISOString().split('T')[0]);
         setEditCheckOutDate(new Date(res.CheckOutDate).toISOString().split('T')[0]);
@@ -78,7 +78,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
     setLoading(true);
     
     try {
-      // Validation
+      
       const checkIn = new Date(editCheckInDate);
       const checkOut = new Date(editCheckOutDate);
       
@@ -155,7 +155,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
     room.Status === 'Occupied' ? 'bg-[#F39C12]/20 text-[#F39C12]' :
     'bg-[#E74C3C]/20 text-[#E74C3C]';
 
-  // Calculate duration
+  
   const getDuration = () => {
     if (!reservation) return 0;
     const checkIn = new Date(reservation.CheckInDate);
@@ -175,19 +175,19 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
 
   return (
     <>
-      {/* Backdrop */}
+      {}
       <div 
         className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40"
         onClick={onClose}
       />
       
-      {/* Modal */}
+      {}
       <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
         <div 
           className="bg-[#1A1A2E] rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
+          {}
           <div className="p-6 border-b border-white/10">
             <div className="flex justify-between items-start mb-4">
               <div className="flex items-center gap-4">
@@ -206,7 +206,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
               </button>
             </div>
 
-            {/* Action Buttons */}
+            {}
             {room.Status === 'Occupied' && reservation && !isEditing && (
               <div className="flex gap-3 flex-wrap">
                 <button 
@@ -232,7 +232,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
               </div>
             )}
 
-            {/* Room Status Change for Available/Maintenance rooms */}
+            {}
             {(room.Status === 'Available' || room.Status === 'Maintenance') && (
               <div className="flex gap-3">
                 {room.Status === 'Available' && (
@@ -278,10 +278,10 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
             )}
           </div>
 
-          {/* Content */}
+          {}
           <div className="p-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Left Column: Room Profile */}
+              {}
               <div className="lg:col-span-1">
                 <div className="bg-[#2C3E50] p-6 rounded-xl">
                   <h3 className="text-white text-xl font-bold mb-6">Oda Detayları</h3>
@@ -315,7 +315,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                 </div>
               </div>
 
-              {/* Right Column: Guest & Reservation Info */}
+              {}
               <div className="lg:col-span-2 flex flex-col gap-6">
                 {editError && (
                   <div className="bg-red-900/20 border border-red-500 rounded-lg p-4">
@@ -332,7 +332,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                     </div>
                   ) : reservation ? (
                     <>
-                      {/* Guest Profile */}
+                      {}
                       <div className="bg-[#2C3E50] p-6 rounded-xl">
                         <h3 className="text-white text-xl font-bold mb-6">Misafir Bilgileri</h3>
                         
@@ -378,7 +378,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                         </div>
                       </div>
 
-                      {/* Reservation Details */}
+                      {}
                       <div className="bg-[#2C3E50] p-6 rounded-xl">
                         <h3 className="text-white text-xl font-bold mb-6">Rezervasyon Detayları</h3>
                         
@@ -453,7 +453,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                         )}
                       </div>
 
-                      {/* Staff Notes */}
+                      {}
                       {!isEditing && reservation.StaffNotes && (
                         <div className="bg-[#2C3E50] p-6 rounded-xl">
                           <h3 className="text-white text-xl font-bold mb-4">Staff Notes</h3>

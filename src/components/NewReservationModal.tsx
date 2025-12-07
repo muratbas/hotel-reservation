@@ -27,18 +27,18 @@ export default function NewReservationModal({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  // Form state
+  
   const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
   const [isNewGuest, setIsNewGuest] = useState(true);
   const [selectedGuestId, setSelectedGuestId] = useState<number | null>(null);
   
-  // Guest form fields
+  
   const [guestName, setGuestName] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
   const [guestGender, setGuestGender] = useState('');
   
-  // Reservation fields
+  
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const [numberOfGuests, setNumberOfGuests] = useState(1);
@@ -47,12 +47,12 @@ export default function NewReservationModal({
   useEffect(() => {
     if (isOpen) {
       loadRoomsAndGuests();
-      // Set preselected room if provided
+      
       if (preselectedRoom) {
         setSelectedRoomId(preselectedRoom.RoomId);
       }
     } else {
-      // Reset form when closed
+      
       resetForm();
     }
   }, [isOpen, preselectedRoom]);
@@ -80,7 +80,7 @@ export default function NewReservationModal({
         window.electronAPI.getGuests()
       ]);
       
-      // Filter only available rooms
+      
       const availableRooms = roomsData.filter((r: Room) => r.Status === 'Available');
       setRooms(availableRooms);
       setGuests(guestsData);
@@ -97,7 +97,7 @@ export default function NewReservationModal({
     setLoading(true);
 
     try {
-      // Validation
+      
       if (!selectedRoomId) {
         throw new Error('Please select a room');
       }
@@ -121,7 +121,7 @@ export default function NewReservationModal({
         throw new Error('Check-out must be after check-in');
       }
 
-      // Check for date conflicts
+      
       const hasConflict = await window.electronAPI.checkDateConflict(
         selectedRoomId,
         checkInDate,
@@ -132,7 +132,7 @@ export default function NewReservationModal({
         throw new Error('This room is already booked for these dates');
       }
 
-      // Create reservation
+      
       const result = await window.electronAPI.createReservation({
         roomId: selectedRoomId,
         isNewGuest,
@@ -172,7 +172,7 @@ export default function NewReservationModal({
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
       <div className="bg-sidebar-dark rounded-xl border border-border-color w-full max-w-3xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
+        {}
         <div className="flex items-center justify-between p-6 border-b border-border-color">
           <h2 className="text-text-primary text-2xl font-bold">Yeni Rezervasyon</h2>
           <button
@@ -183,23 +183,23 @@ export default function NewReservationModal({
           </button>
         </div>
 
-        {/* Form */}
+        {}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* Error Message */}
+          {}
           {error && (
             <div className="bg-red-900/20 border border-red-500 rounded-lg p-4">
               <p className="text-red-300 text-sm">{error}</p>
             </div>
           )}
 
-          {/* Success Message */}
+          {}
           {success && (
             <div className="bg-green-900/20 border border-green-500 rounded-lg p-4">
               <p className="text-green-300 text-sm">✅ Rezervasyon başarıyla oluşturuldu!</p>
             </div>
           )}
 
-          {/* Room Selection */}
+          {}
           <div className="space-y-2">
             <label className="text-text-primary text-sm font-medium">Oda *</label>
             <select
@@ -212,7 +212,7 @@ export default function NewReservationModal({
               <option value="">Oda seçin</option>
               {rooms.map((room) => (
                 <option key={room.RoomId} value={room.RoomId}>
-                  Room {room.RoomNumber} - {room.Type} (₺{Number(room.PricePerNight).toFixed(2)}/night)
+                  Oda {room.RoomNumber} - {room.Type} (₺{Number(room.PricePerNight).toFixed(2)}/gece)
                 </option>
               ))}
             </select>
@@ -223,7 +223,7 @@ export default function NewReservationModal({
             )}
           </div>
 
-          {/* Guest Selection Toggle */}
+          {}
           <div className="flex gap-4">
             <button
               type="button"
@@ -249,7 +249,7 @@ export default function NewReservationModal({
             </button>
           </div>
 
-          {/* Guest Form */}
+          {}
           {isNewGuest ? (
             <div className="space-y-4">
               <div className="space-y-2">
@@ -323,7 +323,7 @@ export default function NewReservationModal({
             </div>
           )}
 
-          {/* Dates */}
+          {}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-text-primary text-sm font-medium">Giriş Tarihi *</label>
@@ -350,7 +350,7 @@ export default function NewReservationModal({
             </div>
           </div>
 
-          {/* Number of Guests */}
+          {}
           <div className="space-y-2">
             <label className="text-text-primary text-sm font-medium">Misafir Sayısı</label>
             <input
@@ -369,7 +369,7 @@ export default function NewReservationModal({
             )}
           </div>
 
-          {/* Staff Notes */}
+          {}
           <div className="space-y-2">
             <label className="text-text-primary text-sm font-medium">Personel Notları (Opsiyonel)</label>
             <textarea
@@ -382,7 +382,7 @@ export default function NewReservationModal({
             />
           </div>
 
-          {/* Actions */}
+          {}
           <div className="flex gap-4 pt-4">
             <button
               type="button"
@@ -405,4 +405,3 @@ export default function NewReservationModal({
     </div>
   );
 }
-

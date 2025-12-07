@@ -1,9 +1,7 @@
-// Database types matching MySQL schema
-
 export type RoomType = 'Standard' | 'Deluxe' | 'Suite';
 export type RoomStatus = 'Available' | 'Occupied' | 'Maintenance';
 export type ReservationStatus = 'Active' | 'CheckedOut' | 'Cancelled';
-export type UserRole = 'Yönetici' | 'Personel' | 'Manager' | 'Staff'; // Manager | Staff (supports both Turkish and English)
+export type UserRole = 'Yönetici' | 'Personel' | 'Manager' | 'Staff'; 
 
 export interface Room {
   RoomId: number;
@@ -37,7 +35,7 @@ export interface Reservation {
   Status: ReservationStatus;
   CreatedAt: Date;
   CreatedByManagerId: number;
-  // Joined fields
+  
   RoomNumber?: string;
   RoomType?: RoomType;
   GuestName?: string;
@@ -55,4 +53,3 @@ export interface Manager {
   CreatedAt: Date;
   LastLoginAt?: Date;
 }
-
