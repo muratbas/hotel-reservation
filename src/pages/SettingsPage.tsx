@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { Manager } from '../types/database';
 import TitleBar from '../components/TitleBar';
 import { isManagerRole } from '../utils/roleHelper';
+import { fixTurkishEncoding } from '../utils/textHelper';
 
 interface SettingsPageProps {
   currentManager: Manager;
@@ -107,10 +108,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
           {/* Logo and Admin Info */}
           <div className="flex items-center gap-3 mb-8">
             <div className="flex items-center justify-center bg-primary rounded-full size-10">
-              <span className="text-text-primary font-bold text-lg">{currentManager.FullName.charAt(0).toUpperCase()}</span>
+              <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
             </div>
             <div className="flex flex-col">
-              <h1 className="text-text-primary text-base font-medium">{currentManager.FullName}</h1>
+              <h1 className="text-text-primary text-base font-medium">{fixTurkishEncoding(currentManager.FullName)}</h1>
               <p className="text-text-secondary text-sm">{currentManager.Email}</p>
             </div>
           </div>
@@ -227,12 +228,12 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
                     <div className="flex items-center gap-4">
                       <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full">
                         <span className="text-text-primary font-bold text-xl">
-                          {manager.FullName.charAt(0).toUpperCase()}
+                          {fixTurkishEncoding(manager.FullName).charAt(0).toUpperCase()}
                         </span>
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="text-text-primary font-semibold">{manager.FullName}</p>
+                          <p className="text-text-primary font-semibold">{fixTurkishEncoding(manager.FullName)}</p>
                           {manager.ManagerId === currentManager.ManagerId && (
                             <span className="px-2 py-0.5 bg-primary/20 text-primary text-xs font-semibold rounded-full">
                               Siz
@@ -280,7 +281,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
                   </span>
                 </div>
                 <div>
-                  <p className="text-text-primary text-xl font-bold">{currentManager.FullName}</p>
+                  <p className="text-text-primary text-xl font-bold">{fixTurkishEncoding(currentManager.FullName)}</p>
                   <p className="text-text-secondary">{currentManager.Email}</p>
                 </div>
               </div>
@@ -288,7 +289,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-hover-dark rounded-lg">
                   <label className="text-text-secondary text-sm block mb-1">Ad Soyad</label>
-                  <p className="text-text-primary font-medium">{currentManager.FullName}</p>
+                  <p className="text-text-primary font-medium">{fixTurkishEncoding(currentManager.FullName)}</p>
                 </div>
                 <div className="p-4 bg-hover-dark rounded-lg">
                   <label className="text-text-secondary text-sm block mb-1">E-posta</label>
@@ -329,7 +330,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-hover-dark rounded-lg">
               <p className="text-text-secondary text-sm mb-1">Sürüm</p>
-              <p className="text-text-primary font-semibold">1.0.0</p>
+              <p className="text-text-primary font-semibold">1.6.4</p>
             </div>
             <div className="p-4 bg-hover-dark rounded-lg">
               <p className="text-text-secondary text-sm mb-1">Veritabanı</p>
@@ -341,7 +342,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
             </div>
             <div className="p-4 bg-hover-dark rounded-lg">
               <p className="text-text-secondary text-sm mb-1">Mevcut Kullanıcı</p>
-              <p className="text-text-primary font-semibold">{currentManager.FullName}</p>
+              <p className="text-text-primary font-semibold">{fixTurkishEncoding(currentManager.FullName)}</p>
             </div>
           </div>
         </div>

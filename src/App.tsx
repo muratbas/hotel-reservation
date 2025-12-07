@@ -44,6 +44,7 @@ import SettingsPage from './pages/SettingsPage';
 import TitleBar from './components/TitleBar';
 import { downloadCSV } from './utils/csvExport';
 import { isManagerRole } from './utils/roleHelper';
+import { fixTurkishEncoding } from './utils/textHelper';
 
 // Ana uygulama komponenti - tüm uygulamayı yöneten merkezi bileşen
 function App() {
@@ -277,10 +278,10 @@ function App() {
             {/* Logo and Admin Info */}
             <div className="flex items-center gap-3 mb-8">
               <div className="flex items-center justify-center bg-primary rounded-full size-10">
-                <span className="text-text-primary font-bold text-lg">{currentManager.FullName.charAt(0).toUpperCase()}</span>
+                <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
               </div>
               <div className="flex flex-col">
-                <h1 className="text-text-primary text-base font-medium">{currentManager.FullName}</h1>
+                <h1 className="text-text-primary text-base font-medium">{fixTurkishEncoding(currentManager.FullName)}</h1>
                 <p className="text-text-secondary text-sm">{currentManager.Email}</p>
               </div>
             </div>
@@ -354,10 +355,10 @@ function App() {
             {/* Logo ve Yönetici Bilgileri */}
             <div className="flex items-center gap-3 mb-8">
               <div className="flex items-center justify-center bg-primary rounded-full size-10">
-                <span className="text-text-primary font-bold text-lg">{currentManager.FullName.charAt(0).toUpperCase()}</span>
+                <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
               </div>
               <div className="flex flex-col">
-                <h1 className="text-text-primary text-base font-medium">{currentManager.FullName}</h1>
+                <h1 className="text-text-primary text-base font-medium">{fixTurkishEncoding(currentManager.FullName)}</h1>
                 <p className="text-text-secondary text-sm">{currentManager.Email}</p>
               </div>
             </div>
@@ -430,10 +431,10 @@ function App() {
           {/* Logo ve Yönetici Bilgileri - Üst kısımda yönetici ismi ve emaili */}
           <div className="flex items-center gap-3 mb-8">
             <div className="flex items-center justify-center bg-primary rounded-full size-10">
-              <span className="text-text-primary font-bold text-lg">{currentManager.FullName.charAt(0).toUpperCase()}</span>
+              <span className="text-text-primary font-bold text-lg">{fixTurkishEncoding(currentManager.FullName).charAt(0).toUpperCase()}</span>
             </div>
             <div className="flex flex-col">
-              <h1 className="text-text-primary text-base font-medium">{currentManager.FullName}</h1>
+              <h1 className="text-text-primary text-base font-medium">{fixTurkishEncoding(currentManager.FullName)}</h1>
               <p className="text-text-secondary text-sm">{currentManager.Email}</p>
             </div>
           </div>

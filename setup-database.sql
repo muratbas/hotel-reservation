@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS Reservations (
 
 -- Check if admin exists, if not create it
 INSERT INTO Managers (Email, PasswordHash, FullName, Role, CreatedAt)
-SELECT 'admin@hotel.com', '$2b$10$W1WHyps7Ozl2NyPRovTPqu/i96dgIA2ViiUGOv.lNPXiWDWESz.Im', 'Administrator', 'Yönetici', NOW()
+SELECT 'admin@hotel.com', '$2b$10$W1WHyps7Ozl2NyPRovTPqu/i96dgIA2ViiUGOv.lNPXiWDWESz.Im', 'Yönetici', 'Yönetici', NOW()
 WHERE NOT EXISTS (SELECT 1 FROM Managers WHERE Email = 'admin@hotel.com');
 
 -- ============================================
