@@ -1,6 +1,3 @@
--- Add Role column to Managers table for role-based access control
--- Run this SQL script to upgrade your database
-
 USE hotel_reservation;
 
 -- Add Role column to Managers table

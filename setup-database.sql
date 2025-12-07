@@ -2,11 +2,20 @@
 -- Hotel Reservation System - Database Setup
 -- ============================================
 -- This script sets up the complete database for the hotel management system
--- Run this script once to initialize everything
+-- 
+-- FOR RAILWAY.APP:
+-- 1. Go to your Railway MySQL service
+-- 2. Click "Data" tab
+-- 3. Copy and paste this ENTIRE file into the Query section
+-- 4. Click "Run" or "Execute"
+--
+-- NOTE: Railway's default database is called 'railway'
+-- We'll use that instead of creating a new database
 
--- Create database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS hotel_reservation;
-USE hotel_reservation;
+-- Use Railway's default database
+-- If you want to use 'hotel_reservation' instead, uncomment the next 2 lines:
+-- CREATE DATABASE IF NOT EXISTS hotel_reservation;
+-- USE hotel_reservation;
 
 -- ============================================
 -- TABLE CREATION

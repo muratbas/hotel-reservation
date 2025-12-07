@@ -8,13 +8,21 @@ import bcrypt from 'bcryptjs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Database configuration
+// ============================================
+// DATABASE CONFIGURATION - RAILWAY.APP
+// ============================================
+// Replace these with your actual Railway MySQL credentials:
+// 1. Go to Railway.app dashboard
+// 2. Click on your MySQL service
+// 3. Go to "Connect" tab
+// 4. Copy and paste your credentials below
+
 const dbConfig = {
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'muratbas55',
-  database: 'hotel_reservation'
+  host: 'mysql.railway.internal',        // Example: containers-us-west-123.railway.app
+  port: 3306,                                    // Your Railway MySQL port (usually not 3306)
+  user: 'root',                                  // Usually 'root'
+  password: 'vXJaPghAVijvAiJyfeYGaYTNFWCODuCM',             // Your Railway MySQL password
+  database: 'railway'                            // Railway's default database name (or 'hotel_reservation' if you created it)
 };
 
 let mainWindow: BrowserWindow | null = null;
