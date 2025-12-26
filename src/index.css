@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,37 +32,33 @@
 
 /* Apply theme colors */
 body {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-background);
   color: var(--color-text-primary);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 /* Theme utility classes */
-.theme-bg {
-  background-color: var(--color-background);
-}
-.theme-sidebar {
-  background-color: var(--color-sidebar);
-}
-.theme-card {
-  background-color: var(--color-card);
-}
-.theme-hover:hover {
-  background-color: var(--color-hover);
-}
-.theme-border {
-  border-color: var(--color-border);
-}
-.theme-text {
-  color: var(--color-text-primary);
-}
-.theme-text-secondary {
-  color: var(--color-text-secondary);
-}
+.theme-bg { background-color: var(--color-background); }
+.theme-sidebar { background-color: var(--color-sidebar); }
+.theme-card { background-color: var(--color-card); }
+.theme-hover:hover { background-color: var(--color-hover); }
+.theme-border { border-color: var(--color-border); }
+.theme-text { color: var(--color-text-primary); }
+.theme-text-secondary { color: var(--color-text-secondary); }
 
 /* Light mode specific overrides for Tailwind classes */
-.light .bg-background-dark {
-  background-color: var(--color-background);
-}
+.light .bg-background-dark { background-color: var(--color-background); }
 .light .bg-sidebar-dark {
   background-color: var(--color-sidebar);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
@@ -68,24 +67,12 @@ body {
   background-color: var(--color-card);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
-.light .bg-hover-dark {
-  background-color: var(--color-hover);
-}
-.light .hover\:bg-hover-dark:hover {
-  background-color: var(--color-hover);
-}
-.light .border-border-color {
-  border-color: var(--color-border);
-}
-.light .text-text-primary {
-  color: var(--color-text-primary);
-}
-.light .text-text-secondary {
-  color: var(--color-text-secondary);
-}
-.light .text-white {
-  color: var(--color-text-primary);
-}
+.light .bg-hover-dark { background-color: var(--color-hover); }
+.light .hover\:bg-hover-dark:hover { background-color: var(--color-hover); }
+.light .border-border-color { border-color: var(--color-border); }
+.light .text-text-primary { color: var(--color-text-primary); }
+.light .text-text-secondary { color: var(--color-text-secondary); }
+.light .text-white { color: var(--color-text-primary); }
 
 /* Input and select overrides for light mode */
 .light input,
@@ -101,54 +88,21 @@ body {
 }
 
 /* Modal backdrop */
-.light .bg-black\/50 {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-.light .bg-black\/70 {
-  background-color: rgba(0, 0, 0, 0.4);
-}
+.light .bg-black\/50 { background-color: rgba(0, 0, 0, 0.3); }
+.light .bg-black\/70 { background-color: rgba(0, 0, 0, 0.4); }
 
 /* Room cards - keep status colors but adjust text */
-.light .bg-green-800\/20 {
-  background-color: rgba(34, 197, 94, 0.15);
-}
-.light .bg-yellow-800\/20 {
-  background-color: rgba(234, 179, 8, 0.15);
-}
-.light .bg-red-800\/20 {
-  background-color: rgba(239, 68, 68, 0.15);
-}
-.light .text-green-300 {
-  color: #15803d;
-}
-.light .text-yellow-300 {
-  color: #a16207;
-}
-.light .text-red-300 {
-  color: #dc2626;
-}
+.light .bg-green-800\/20 { background-color: rgba(34, 197, 94, 0.15); }
+.light .bg-yellow-800\/20 { background-color: rgba(234, 179, 8, 0.15); }
+.light .bg-red-800\/20 { background-color: rgba(239, 68, 68, 0.15); }
+.light .text-green-300 { color: #15803d; }
+.light .text-yellow-300 { color: #a16207; }
+.light .text-red-300 { color: #dc2626; }
 
 /* Title bar */
-.light .bg-\[\#1A1A2E\] {
-  background-color: var(--color-card);
-}
-.light .bg-\[\#2C3E50\] {
-  background-color: #f1f5f9;
-}
-.light .border-white\/10 {
-  border-color: var(--color-border);
-}
-
-/* Scrollbar for light mode */
-.light .event-description-scroll {
-  scrollbar-color: #cbd5e1 transparent;
-}
-.light .event-description-scroll::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-}
-.light .event-description-scroll:hover::-webkit-scrollbar-thumb {
-  background-color: #94a3b8;
-}
+.light .bg-\[\#1A1A2E\] { background-color: var(--color-card); }
+.light .bg-\[\#2C3E50\] { background-color: #f1f5f9; }
+.light .border-white\/10 { border-color: var(--color-border); }
 
 /* Hide scrollbars */
 *:not(input):not(textarea):not(select)::-webkit-scrollbar {
@@ -162,43 +116,33 @@ body {
   scrollbar-width: none;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
-
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-}
-
-body {
-  margin: 0;
-  font-family: "Manrope", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-}
-
+/* Event description scrollbar */
 .event-description-scroll {
   scrollbar-width: thin;
   scrollbar-color: #324d67 transparent;
 }
-
 .event-description-scroll::-webkit-scrollbar {
   width: 4px;
   display: block;
 }
-
 .event-description-scroll::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .event-description-scroll::-webkit-scrollbar-thumb {
   background-color: #324d67;
   border-radius: 4px;
 }
-
 .event-description-scroll:hover::-webkit-scrollbar-thumb {
   background-color: #92adc9;
+}
+
+/* Light mode scrollbar */
+.light .event-description-scroll {
+  scrollbar-color: #cbd5e1 transparent;
+}
+.light .event-description-scroll::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+}
+.light .event-description-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
 }
