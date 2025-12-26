@@ -640,19 +640,33 @@ function App() {
                   room.Status === 'Occupied' ? 'text-yellow-300' :
                   'text-red-300';
 
+                // Room type icon and color
+                const typeIcon = 
+                  room.Type === 'Standard' ? 'bed' :
+                  room.Type === 'Deluxe' ? 'star' :
+                  'workspace_premium';
+                
+                const typeIconColor = 
+                  room.Type === 'Standard' ? 'text-blue-400' :
+                  room.Type === 'Deluxe' ? 'text-amber-400' :
+                  'text-purple-400';
+
                 return (
                   <div
                     key={room.RoomId}
                     onClick={() => handleRoomClick(room)}
                     className={`relative p-4 rounded-lg ${statusColor} border cursor-pointer transition-all hover:scale-105`}
                   >
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mb-1">
                       <span className="text-text-primary font-bold">{room.RoomNumber}</span>
                       <div className={`size-3 rounded-full ${dotColor}`}></div>
                     </div>
-                    <p className={`${textColor} text-sm`}>
-                      {room.Status === 'Available' ? 'Müsait' : room.Status === 'Occupied' ? 'Dolu' : 'Bakımda'}
-                    </p>
+                    <div className="flex items-center gap-1.5">
+                      <span className={`material-symbols-outlined text-sm ${typeIconColor}`}>{typeIcon}</span>
+                      <p className={`${textColor} text-sm`}>
+                        {room.Status === 'Available' ? 'Müsait' : room.Status === 'Occupied' ? 'Dolu' : 'Bakımda'}
+                      </p>
+                    </div>
                   </div>
                   );
                 })}
