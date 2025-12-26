@@ -296,7 +296,6 @@ export default function DashboardPage() {
                   value={newEvent.title}
                   onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
                   className="w-full px-4 py-2 bg-[#233648] text-white border border-[#324d67] rounded-lg focus:outline-none focus:border-[#137fec]"
-                  placeholder="Etkinlik başlığı"
                 />
               </div>
 
@@ -307,7 +306,6 @@ export default function DashboardPage() {
                   onChange={(e) => setNewEvent({ ...newEvent, description: e.target.value })}
                   className="w-full px-4 py-2 bg-[#233648] text-white border border-[#324d67] rounded-lg focus:outline-none focus:border-[#137fec] resize-none"
                   rows={3}
-                  placeholder="Etkinlik açıklaması"
                 />
               </div>
 
@@ -318,7 +316,6 @@ export default function DashboardPage() {
                   value={newEvent.date}
                   onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
                   className="w-full px-4 py-2 bg-[#233648] text-white border border-[#324d67] rounded-lg focus:outline-none focus:border-[#137fec]"
-                  placeholder="Örn: 24-26 Aralık veya 10-12 Ocak"
                 />
               </div>
 

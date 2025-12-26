@@ -172,7 +172,7 @@ export default function GuestsPage({ onNavigate: _onNavigate }: GuestsPageProps)
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="İsim, telefon veya e-posta ile arayın..."
+            
             className="w-full bg-sidebar-dark text-text-primary border border-border-color rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary placeholder-text-secondary/50"
             autoComplete="off"
           />

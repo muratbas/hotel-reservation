@@ -73,7 +73,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 bg-hover-dark border border-border-color rounded-xl text-text-primary placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all [color-scheme:dark]"
-                  placeholder="admin@hotel.com"
                   required
                   autoComplete="email"
                 />
@@ -95,7 +94,6 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 bg-hover-dark border border-border-color rounded-xl text-text-primary placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all [color-scheme:dark]"
-                  placeholder="Şifrenizi girin"
                   required
                   autoComplete="current-password"
                 />

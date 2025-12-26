@@ -259,7 +259,6 @@ export default function NewReservationModal({
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
                   className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary placeholder-text-secondary/50"
-                  placeholder="John Doe"
                   required
                   autoComplete="off"
                 />
@@ -272,7 +271,6 @@ export default function NewReservationModal({
                   value={guestPhone}
                   onChange={(e) => setGuestPhone(e.target.value)}
                   className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary placeholder-text-secondary/50"
-                  placeholder="+1 234 567 8900"
                   required
                   autoComplete="off"
                 />
@@ -285,7 +283,6 @@ export default function NewReservationModal({
                   value={guestEmail}
                   onChange={(e) => setGuestEmail(e.target.value)}
                   className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary placeholder-text-secondary/50"
-                  placeholder="john@example.com"
                   autoComplete="off"
                 />
               </div>
@@ -377,7 +374,6 @@ export default function NewReservationModal({
               onChange={(e) => setStaffNotes(e.target.value)}
               className="w-full bg-card-dark text-text-primary border border-border-color rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary resize-none placeholder-text-secondary/50"
               rows={3}
-              placeholder="Özel istekler veya notlar..."
               autoComplete="off"
             />
           </div>

@@ -367,7 +367,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
                   value={newManagerData.fullName}
                   onChange={(e) => setNewManagerData({ ...newManagerData, fullName: e.target.value })}
                   className="w-full px-4 py-3 bg-hover-dark border border-border-color rounded-lg text-text-primary placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary [color-scheme:dark]"
-                  placeholder="John Doe"
                   required
                   autoComplete="off"
                 />
@@ -380,7 +379,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
                   value={newManagerData.email}
                   onChange={(e) => setNewManagerData({ ...newManagerData, email: e.target.value })}
                   className="w-full px-4 py-3 bg-hover-dark border border-border-color rounded-lg text-text-primary placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary [color-scheme:dark]"
-                  placeholder="manager@hotel.com"
                   required
                   autoComplete="off"
                 />
@@ -393,7 +391,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
                   value={newManagerData.password}
                   onChange={(e) => setNewManagerData({ ...newManagerData, password: e.target.value })}
                   className="w-full px-4 py-3 bg-hover-dark border border-border-color rounded-lg text-text-primary placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary [color-scheme:dark]"
-                  placeholder="Şifre girin"
                   required
                   minLength={6}
                   autoComplete="off"
