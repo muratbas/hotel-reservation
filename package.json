@@ -1,11 +1,11 @@
 {
-  "name": "hotel-reservation-admin",
+  "name": "otel-rezervasyon-paneli",
   "private": true,
   "version": "2.0.1",
   "type": "module",
   "main": "dist-electron/main.js",
   "author": "Your Name",
-  "description": "Hotel Reservation Admin Panel",
+  "description": "Otel Rezervasyon Paneli",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && tsc -p tsconfig.electron.json && electron-builder",
@@ -45,7 +45,7 @@
   },
   "build": {
     "appId": "com.yourcompany.hotel-reservation",
-    "productName": "Hotel Reservation Admin",
+    "productName": "Otel Rezervasyon Paneli",
     "directories": {
       "output": "release"
     },
