@@ -7,9 +7,10 @@ interface RoomDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onReservationUpdated?: () => void;
+  onCreateReservation?: (room: Room) => void;
 }
 
-export default function RoomDetailsModal({ room, isOpen, onClose, onReservationUpdated }: RoomDetailsModalProps) {
+export default function RoomDetailsModal({ room, isOpen, onClose, onReservationUpdated, onCreateReservation }: RoomDetailsModalProps) {
   const [reservation, setReservation] = useState<Reservation | null>(null);
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -236,14 +237,29 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
             {(room.Status === 'Available' || room.Status === 'Maintenance') && (
               <div className="flex gap-3">
                 {room.Status === 'Available' && (
-                  <button 
-                    onClick={handleSetMaintenance}
-                    disabled={loading}
-                    className="flex items-center gap-2 justify-center rounded-lg h-10 px-4 bg-[#E67E22] hover:bg-[#D35400] text-white text-sm font-bold transition-colors disabled:opacity-50"
-                  >
-                    <span className="material-symbols-outlined text-base">build</span>
-                    <span className="truncate">Bakıma Al</span>
-                  </button>
+                  <>
+                    <button 
+                      onClick={() => {
+                        if (onCreateReservation && room) {
+                          onClose();
+                          onCreateReservation(room);
+                        }
+                      }}
+                      disabled={loading}
+                      className="flex items-center gap-2 justify-center rounded-lg h-10 px-4 bg-[#27AE60] hover:bg-[#229954] text-white text-sm font-bold transition-colors disabled:opacity-50"
+                    >
+                      <span className="material-symbols-outlined text-base">add_circle</span>
+                      <span className="truncate">Yeni Rezervasyon</span>
+                    </button>
+                    <button 
+                      onClick={handleSetMaintenance}
+                      disabled={loading}
+                      className="flex items-center gap-2 justify-center rounded-lg h-10 px-4 bg-[#E67E22] hover:bg-[#D35400] text-white text-sm font-bold transition-colors disabled:opacity-50"
+                    >
+                      <span className="material-symbols-outlined text-base">build</span>
+                      <span className="truncate">Bakıma Al</span>
+                    </button>
+                  </>
                 )}
                 {room.Status === 'Maintenance' && (
                   <button 

@@ -46,6 +46,8 @@ function App() {
   
   const [isRoomManagementModalOpen, setIsRoomManagementModalOpen] = useState(false);
   
+  const [preselectedRoom, setPreselectedRoom] = useState<Room | null>(null);
+  
   const [currentPage, setCurrentPage] = useState(1);
   
   const roomsPerPage = 12;
@@ -73,6 +75,12 @@ function App() {
   
   const handleReservationCreated = () => {
     loadRooms();  
+  };
+
+  // Handle creating reservation from room details modal
+  const handleCreateReservationFromRoom = (room: Room) => {
+    setPreselectedRoom(room);
+    setIsNewReservationModalOpen(true);
   };
 
   
@@ -742,12 +750,17 @@ function App() {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onReservationUpdated={handleReservationCreated}
+        onCreateReservation={handleCreateReservationFromRoom}
       />
 
       {}
       <NewReservationModal
         isOpen={isNewReservationModalOpen}
-        onClose={() => setIsNewReservationModalOpen(false)}
+        onClose={() => {
+          setIsNewReservationModalOpen(false);
+          setPreselectedRoom(null);
+        }}
+        preselectedRoom={preselectedRoom}
         onReservationCreated={handleReservationCreated}
       />
 
