@@ -50,7 +50,27 @@ function App() {
   
   const [currentPage, setCurrentPage] = useState(1);
   
+  // Theme state - light mode default
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved ? saved === 'dark' : false;
+  });
+  
   const roomsPerPage = 12;
+
+  // Apply theme class to body on mount and theme change
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.remove('light');
+    } else {
+      document.body.classList.add('light');
+    }
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   
   
@@ -238,7 +258,7 @@ function App() {
   
   
   if (currentView === 'settings') {
-    return <SettingsPage currentManager={currentManager} onNavigate={setCurrentView} />;
+    return <SettingsPage currentManager={currentManager} onNavigate={setCurrentView} isDarkMode={isDarkMode} onToggleTheme={toggleTheme} />;
   }
 
   

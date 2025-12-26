@@ -7,9 +7,11 @@ import { fixTurkishEncoding } from '../utils/textHelper';
 interface SettingsPageProps {
   currentManager: Manager;
   onNavigate: (view: 'dashboard' | 'rooms' | 'guests' | 'settings') => void;
+  isDarkMode: boolean;
+  onToggleTheme: () => void;
 }
 
-const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate }) => {
+const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate, isDarkMode, onToggleTheme }) => {
   const [managers, setManagers] = useState<Manager[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -323,6 +325,34 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
             </div>
           </div>
         )}
+
+        {/* Görünüm Ayarları */}
+        <div className="bg-card-dark border border-border-color rounded-2xl p-6">
+          <h2 className="text-text-primary text-2xl font-bold mb-4">Görünüm Ayarları</h2>
+          <div className="flex items-center justify-between p-4 bg-hover-dark rounded-lg">
+            <div className="flex items-center gap-3">
+              <span className={`material-symbols-outlined text-2xl ${isDarkMode ? 'text-yellow-400' : 'text-blue-500'}`}>
+                {isDarkMode ? 'dark_mode' : 'light_mode'}
+              </span>
+              <div>
+                <p className="text-text-primary font-semibold">{isDarkMode ? 'Karanlık Mod' : 'Açık Mod'}</p>
+                <p className="text-text-secondary text-sm">Uygulama temasını değiştirin</p>
+              </div>
+            </div>
+            <button
+              onClick={onToggleTheme}
+              className={`relative w-12 h-6 rounded-full transition-colors duration-300 flex-shrink-0 ${
+                isDarkMode ? 'bg-primary' : 'bg-gray-300'
+              }`}
+            >
+              <span 
+                className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform duration-300 ${
+                  isDarkMode ? 'translate-x-6' : 'translate-x-0'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
 
         {}
         <div className="bg-card-dark border border-border-color rounded-2xl p-6">

@@ -2,33 +2,176 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme CSS Variables */
+:root {
+  /* Dark theme (default) */
+  --color-background: #101922;
+  --color-sidebar: #111a22;
+  --color-card: #192633;
+  --color-hover: #233648;
+  --color-border: #324d67;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #92adc9;
+  --color-primary: #137fec;
+}
 
+/* Light theme */
+.light {
+  --color-background: #f5f7fa;
+  --color-sidebar: #ffffff;
+  --color-card: #ffffff;
+  --color-hover: #e8ecf1;
+  --color-border: #d1d9e6;
+  --color-text-primary: #1a202c;
+  --color-text-secondary: #4a5568;
+  --color-primary: #137fec;
+}
+
+/* Apply theme colors */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+/* Theme utility classes */
+.theme-bg {
+  background-color: var(--color-background);
+}
+.theme-sidebar {
+  background-color: var(--color-sidebar);
+}
+.theme-card {
+  background-color: var(--color-card);
+}
+.theme-hover:hover {
+  background-color: var(--color-hover);
+}
+.theme-border {
+  border-color: var(--color-border);
+}
+.theme-text {
+  color: var(--color-text-primary);
+}
+.theme-text-secondary {
+  color: var(--color-text-secondary);
+}
+
+/* Light mode specific overrides for Tailwind classes */
+.light .bg-background-dark {
+  background-color: var(--color-background);
+}
+.light .bg-sidebar-dark {
+  background-color: var(--color-sidebar);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+.light .bg-card-dark {
+  background-color: var(--color-card);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.light .bg-hover-dark {
+  background-color: var(--color-hover);
+}
+.light .hover\:bg-hover-dark:hover {
+  background-color: var(--color-hover);
+}
+.light .border-border-color {
+  border-color: var(--color-border);
+}
+.light .text-text-primary {
+  color: var(--color-text-primary);
+}
+.light .text-text-secondary {
+  color: var(--color-text-secondary);
+}
+.light .text-white {
+  color: var(--color-text-primary);
+}
+
+/* Input and select overrides for light mode */
+.light input,
+.light textarea,
+.light select {
+  background-color: #f8fafc !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #a0aec0 !important;
+}
+
+/* Modal backdrop */
+.light .bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.light .bg-black\/70 {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Room cards - keep status colors but adjust text */
+.light .bg-green-800\/20 {
+  background-color: rgba(34, 197, 94, 0.15);
+}
+.light .bg-yellow-800\/20 {
+  background-color: rgba(234, 179, 8, 0.15);
+}
+.light .bg-red-800\/20 {
+  background-color: rgba(239, 68, 68, 0.15);
+}
+.light .text-green-300 {
+  color: #15803d;
+}
+.light .text-yellow-300 {
+  color: #a16207;
+}
+.light .text-red-300 {
+  color: #dc2626;
+}
+
+/* Title bar */
+.light .bg-\[\#1A1A2E\] {
+  background-color: var(--color-card);
+}
+.light .bg-\[\#2C3E50\] {
+  background-color: #f1f5f9;
+}
+.light .border-white\/10 {
+  border-color: var(--color-border);
+}
+
+/* Scrollbar for light mode */
+.light .event-description-scroll {
+  scrollbar-color: #cbd5e1 transparent;
+}
+.light .event-description-scroll::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+}
+.light .event-description-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+}
+
+/* Hide scrollbars */
 *:not(input):not(textarea):not(select)::-webkit-scrollbar {
   width: 0px;
   height: 0px;
   display: none;
 }
 
-
 *:not(input):not(textarea):not(select) {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 body {
   margin: 0;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -36,7 +179,6 @@ body {
 * {
   box-sizing: border-box;
 }
-
 
 .event-description-scroll {
   scrollbar-width: thin;
