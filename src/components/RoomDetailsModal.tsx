@@ -387,7 +387,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                             <div className="flex items-center gap-4">
                               <span className="material-symbols-outlined text-[#EAEAEA]/70">person</span>
                               <p className="text-sm text-white">
-                                {reservation.Gender === 'Male' ? 'Erkek' : reservation.Gender === 'Female' ? 'Kadın' : 'Diğer'}
+                                {reservation.Gender === 'Male' ? 'Erkek' : reservation.Gender === 'Female' ? 'Kadın' : ''}
                               </p>
                             </div>
                           )}

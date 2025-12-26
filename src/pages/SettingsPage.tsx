@@ -330,7 +330,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ currentManager, onNavigate 
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-hover-dark rounded-lg">
               <p className="text-text-secondary text-sm mb-1">Sürüm</p>
-              <p className="text-text-primary font-semibold">1.6.4</p>
+              <p className="text-text-primary font-semibold">2.0.1</p>
             </div>
             <div className="p-4 bg-hover-dark rounded-lg">
               <p className="text-text-secondary text-sm mb-1">Veritabanı</p>

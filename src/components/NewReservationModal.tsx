@@ -297,7 +297,6 @@ export default function NewReservationModal({
                   <option value="">Belirtmek istemiyorum</option>
                   <option value="Male">Erkek</option>
                   <option value="Female">Kadın</option>
-                  <option value="Other">Diğer</option>
                 </select>
               </div>
             </div>
