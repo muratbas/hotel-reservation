@@ -327,7 +327,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                   loading ? (
                     <div className="bg-[#2C3E50] p-6 rounded-xl">
                       <div className="text-center py-8">
-                        <p className="text-[#EAEAEA]/70">Loading guest information...</p>
+                        <p className="text-[#EAEAEA]/70">Misafir bilgileri yükleniyor...</p>
                       </div>
                     </div>
                   ) : reservation ? (
@@ -418,7 +418,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                             </div>
                             
                             <div>
-                              <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Staff Notes</label>
+                              <label className="text-sm text-[#EAEAEA]/70 mb-1 block">Personel Notları</label>
                               <textarea
                                 value={editStaffNotes}
                                 onChange={(e) => setEditStaffNotes(e.target.value)}
@@ -430,24 +430,24 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                         ) : (
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Check-In</p>
+                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Giriş</p>
                               <p className="text-white font-semibold">{formatDate(new Date(reservation.CheckInDate))}</p>
                             </div>
                             <div>
-                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Check-Out</p>
+                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Çıkış</p>
                               <p className="text-white font-semibold">{formatDate(new Date(reservation.CheckOutDate))}</p>
                             </div>
                             <div>
-                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Room</p>
-                              <p className="text-white font-semibold">#{room.RoomNumber} - {room.Type}</p>
+                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Oda</p>
+                              <p className="text-white font-semibold">#{room.RoomNumber} - {room.Type === 'Standard' ? 'Standart' : room.Type === 'Deluxe' ? 'Deluxe' : 'Suit'}</p>
                             </div>
                             <div>
-                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Duration of Stay</p>
-                              <p className="text-white font-semibold">{getDuration()} Nights</p>
+                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Konaklama Süresi</p>
+                              <p className="text-white font-semibold">{getDuration()} Gece</p>
                             </div>
                             <div>
-                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Number of Guests</p>
-                              <p className="text-white font-semibold">{Number(reservation.NumberOfGuests)} guests</p>
+                              <p className="text-sm text-[#EAEAEA]/70 mb-1">Misafir Sayısı</p>
+                              <p className="text-white font-semibold">{Number(reservation.NumberOfGuests)} misafir</p>
                             </div>
                           </div>
                         )}
@@ -456,7 +456,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                       {}
                       {!isEditing && reservation.StaffNotes && (
                         <div className="bg-[#2C3E50] p-6 rounded-xl">
-                          <h3 className="text-white text-xl font-bold mb-4">Staff Notes</h3>
+                          <h3 className="text-white text-xl font-bold mb-4">Personel Notları</h3>
                           <div className="space-y-2">
                             {reservation.StaffNotes.split('\n').map((note, idx) => (
                               <p key={idx} className="text-sm text-[#EAEAEA]/90">- {note}</p>
@@ -468,7 +468,7 @@ export default function RoomDetailsModal({ room, isOpen, onClose, onReservationU
                   ) : (
                     <div className="bg-[#2C3E50] p-6 rounded-xl">
                       <div className="text-center py-8">
-                        <p className="text-[#EAEAEA]/70">No reservation found</p>
+                        <p className="text-[#EAEAEA]/70">Rezervasyon bulunamadı</p>
                       </div>
                     </div>
                   )

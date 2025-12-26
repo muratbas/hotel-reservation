@@ -482,7 +482,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                       <div className="flex justify-between items-start">
                         <div>
                           <p className="text-text-primary font-semibold mb-1">
-                            Room {reservation.RoomNumber} - {reservation.RoomType}
+                            Oda {reservation.RoomNumber} - {reservation.RoomType === 'Standard' ? 'Standart' : reservation.RoomType === 'Deluxe' ? 'Deluxe' : 'Suit'}
                           </p>
                           <p className="text-text-secondary text-sm">
                             {formatDate(reservation.CheckInDate)} → {formatDate(reservation.CheckOutDate)}
@@ -498,7 +498,7 @@ function GuestDetailsModal({ guest, isOpen, onClose, onUpdate }: GuestDetailsMod
                             ? 'bg-green-900/20 text-green-400'
                             : 'bg-gray-900/20 text-gray-400'
                         }`}>
-                          {reservation.Status}
+                          {reservation.Status === 'Active' ? 'Aktif' : reservation.Status === 'CheckedOut' ? 'Tamamlandı' : 'İptal'}
                         </span>
                       </div>
                     </div>
